@@ -1,0 +1,1020 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap');
+
+/* Vektor image */
+
+.button-load {
+    cursor: pointer;
+}
+
+#title {
+    font-size: 35px;
+    font-family: Inter;
+}
+
+#image-vektor-pendaftaran {
+    width: 380px;
+}
+
+
+/* Button Trigger */
+
+.button-trigger {
+    width: 300px;
+    font-family: Roboto;
+}
+
+
+/* Card Ticket */
+
+.box {
+    margin-bottom: 200px;
+}
+
+.card-ticket {
+    padding: 24px;
+    width: 900px;
+    /* height: 300px; */
+    position: relative;
+    margin: auto;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 1px 5px rgb(206, 206, 206);
+    border-radius: 10px;
+    margin-top: -150px;
+    background-image: url("../images/seminar-org/line.png");
+    background-repeat: no-repeat;
+    background-position: 202px;
+    background-size: 10px;
+}
+
+.investasi {
+    margin-top: -130px;
+}
+
+.desc {
+    margin-top: -50px;
+}
+
+.location {
+    width: 25px;
+}
+
+.city {
+    font-size: 22px;
+    color: #05A5FF;
+    font-weight: 500;
+}
+
+.circle {
+    margin-left: -10px;
+}
+
+.circle1 {
+    position: absolute;
+    margin-top: -26px;
+    margin-left: 160px;
+    box-shadow: inset 0px -2px 2px grey;
+    width: 50px;
+    height: 50px;
+    background: #ffffff;
+    transform-origin: top center;
+    border-bottom-left-radius: 1000px;
+    border-bottom-right-radius: 1000px;
+}
+
+.circle2 {
+    position: absolute;
+    margin-top: 27px;
+    margin-left: 160px;
+    box-shadow: inset 0px -2px 2px grey;
+    width: 50px;
+    height: 50px;
+    background: #ffffff;
+    transform-origin: top center;
+    border-bottom-left-radius: 1000px;
+    border-bottom-right-radius: 1000px;
+    transform: rotate(180deg);
+}
+
+.label {
+    font-size: 13px;
+    color: #777777;
+    font-family: Roboto;
+}
+
+.border-right {
+    border-right: 1px solid black;
+}
+
+.date-hours {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: Roboto;
+}
+
+.seminar-title {
+    font-size: 18px;
+    font-weight: 500;
+    font-family: Roboto;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: fit-content;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 1rem 0.4rem;
+    margin-left: 5px;
+}
+
+.quantity-btn {
+    background: transparent;
+    border: 1px solid grey;
+    margin: 0;
+    padding: 1px 9px;
+    cursor: pointer;
+}
+
+.quantity-btn svg {
+    width: 12px;
+    height: 12px;
+}
+
+.quantity-input {
+    outline: none;
+    user-select: none;
+    text-align: center;
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid grey;
+}
+
+.quantity-input::-webkit-inner-spin-button,
+.quantity-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.total-price {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: Roboto;
+    margin-left: 25px;
+    color: #0A9707;
+}
+
+.daftar {
+    width: 150px;
+    margin-top: 20px;
+    background-color: #289FDC;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    font-weight: 500;
+    padding: 5px 0px;
+    cursor: pointer;
+    /* margin-left: 30px; */
+}
+
+.htm-title {
+    font-size: 14px;
+    font-family: Roboto;
+    font-weight: 500;
+}
+
+.htm-price {
+    font-size: 14px;
+    font-family: Roboto;
+    line-height: 40px;
+}
+
+.htm-ots {
+    font-size: 14px;
+    font-family: Roboto;
+}
+
+.address {
+    font-size: 14px;
+}
+
+.note {
+    font-size: 14px;
+    margin-left: 50px;
+    color: #FF6347;
+}
+
+.note-seminar {
+    font-size: 12px;
+    color: #FF6347;
+    margin-left: 220px;
+    font-weight: bold;
+    font-family: Roboto;
+}
+
+#smt-btn {
+    background-color: #289FDC !important;
+    color: black !important;
+    border-radius: 10px;
+    width: 300px;
+}
+
+@media (max-width: 994.98px) {
+    .card-ticket {
+        width: 750px;
+        background-position: 180px;
+    }
+    .circle1 {
+        position: absolute;
+        margin-top: -26px;
+        margin-left: 140px;
+        box-shadow: inset 0px -2px 2px grey;
+        width: 40px;
+        height: 40px;
+        background: #ffffff;
+        transform-origin: top center;
+        border-bottom-left-radius: 1000px;
+        border-bottom-right-radius: 1000px;
+    }
+    .circle2 {
+        position: absolute;
+        margin-top: 27px;
+        margin-left: 140px;
+        box-shadow: inset 0px -2px 2px grey;
+        width: 40px;
+        height: 40px;
+        background: #ffffff;
+        transform-origin: top center;
+        border-bottom-left-radius: 1000px;
+        border-bottom-right-radius: 1000px;
+        transform: rotate(180deg);
+    }
+    .note-seminar {
+        font-size: 11px;
+        color: #FF6347;
+        margin-left: 185px;
+    }
+}
+
+
+/* Ipad */
+
+@media (max-width: 768.98px) {
+    /* Filter */
+    .filterby {
+        margin-left: -50px;
+    }
+    .dates {
+        margin-left: -70px;
+    }
+    #seminar-event {
+        margin-left: -10px;
+    }
+    .events {
+        margin-top: -10px !important;
+    }
+    /* Card Ticket */
+    .card-ticket {
+        width: auto;
+        background-position: 148px;
+    }
+    .investasi {
+        margin-top: -130px;
+    }
+    .desc {
+        margin-top: -50px;
+    }
+    .location {
+        width: 25px;
+    }
+    /* .locations {
+            display: none;
+        } */
+    .city {
+        font-size: 19px !important;
+    }
+    .circle {
+        margin-left: -10px;
+    }
+    .circle1 {
+        position: absolute;
+        margin-top: -26px;
+        margin-left: 110px;
+        box-shadow: inset 0px -2px 2px grey;
+        width: 40px;
+        height: 30px;
+        background: #ffffff;
+        transform-origin: top center;
+        border-bottom-left-radius: 1000px;
+        border-bottom-right-radius: 1000px;
+    }
+    .circle2 {
+        position: absolute;
+        margin-top: 27px;
+        margin-left: 110px;
+        box-shadow: inset 0px -2px 2px grey;
+        width: 40px;
+        height: 30px;
+        background: #ffffff;
+        transform-origin: top center;
+        border-bottom-left-radius: 1000px;
+        border-bottom-right-radius: 1000px;
+        transform: rotate(180deg);
+    }
+    .label {
+        font-size: 13px;
+        color: #777777;
+        font-family: Roboto;
+    }
+    .border-right {
+        border-right: 1px solid black;
+    }
+    .date-hours {
+        font-size: 16px;
+        font-weight: 500;
+        font-family: Roboto;
+    }
+    .seminar-title {
+        font-size: 18px;
+        font-weight: 500;
+        font-family: Roboto;
+    }
+    .quantity-control {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: fit-content;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 1rem 0.4rem;
+        margin-left: -14px;
+    }
+    .quantity-btn {
+        background: transparent;
+        border: 1px solid grey;
+        margin: 0;
+        padding: 1px 9px;
+        cursor: pointer;
+    }
+    .quantity-btn svg {
+        width: 12px;
+        height: 12px;
+    }
+    .quantity-input {
+        outline: none;
+        user-select: none;
+        text-align: center;
+        width: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid grey;
+    }
+    .quantity-input::-webkit-inner-spin-button,
+    .quantity-input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .total-price {
+        font-size: 18px;
+        font-weight: 700;
+        font-family: Roboto;
+        margin-left: 10px;
+        color: #0A9707;
+    }
+    .daftar {
+        width: 110px;
+        margin-top: 20px;
+        background-color: #289FDC;
+        outline: none;
+        border: none;
+        border-radius: 10px;
+        font-weight: 500;
+        padding: 5px 0px;
+        cursor: pointer;
+        /* margin-left: 30px; */
+    }
+    .htm-title {
+        font-size: 14px;
+        font-family: Roboto;
+        font-weight: 500;
+    }
+    .htm-price {
+        font-size: 14px;
+        font-family: Roboto;
+        line-height: 40px;
+    }
+    .htm-ots {
+        font-size: 14px;
+        font-family: Roboto;
+    }
+    .address {
+        font-size: 14px;
+    }
+    .note {
+        font-size: 14px;
+        margin-left: 50px;
+        color: #FF6347;
+    }
+    .row .note-seminar {
+        margin-left: 150px;
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Filter */
+    #filter-select {
+        width: 18vh;
+    }
+    #total-events {
+        margin-top: 0px;
+    }
+    #icon-search {
+        margin-left: 70px;
+    }
+    /* Card Ticket */
+    .card-ticket {
+        width: 258px;
+    }
+    .investasi {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+    .desc {
+        margin-top: 20px;
+    }
+    .circle {
+        display: none;
+    }
+    .quantity-control {
+        margin-left: 42px;
+    }
+    .htm {
+        margin-top: 20px;
+    }
+    .note {
+        margin-left: -10px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .button-register {
+        margin-left: 30px;
+    }
+    /* Filter */
+    #filter-select {
+        width: 70px;
+        font-size: 10px;
+    }
+    .filter-city {
+        margin-left: -100px;
+    }
+    .filterby {
+        font-size: 12px;
+        margin-left: -50px;
+    }
+    .dates {
+        font-size: 11px;
+        padding: 4px;
+        margin-top: -30px;
+        margin-left: -65px;
+        position: absolute;
+    }
+    #seminar-event {
+        font-size: 10px;
+        position: absolute;
+        margin-top: -31px;
+        margin-left: 226px;
+    }
+    .events {
+        display: none;
+    }
+    /* Card Ticket */
+    .card-ticket {
+        width: 258px;
+        box-shadow: 0px 1px 2px rgb(151, 151, 151);
+        background-image: url('../images/seminar-org/line-horizontal.png');
+        background-size: 600px;
+        background-position: 0px;
+        background-position-y: 140px;
+    }
+    .locations {
+        margin-top: -10px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .location {
+        font-size: 10px;
+    }
+    .city {
+        font-size: 20px !important;
+        display: flex;
+    }
+    .investasi {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+    .desc {
+        margin-top: 20px;
+    }
+    .circle1 {
+        display: none;
+    }
+    .circle2 {
+        display: none;
+    }
+    .circle-responsive1 {
+        position: absolute;
+        margin-left: -45px;
+        margin-top: 20px;
+        box-shadow: inset 0px -2px 2px grey;
+        width: 38px;
+        height: 25px;
+        background: #ffffff;
+        transform-origin: top center;
+        border-bottom-left-radius: 1000px;
+        border-bottom-right-radius: 1000px;
+        transform: rotate(-90deg);
+    }
+    .circle-responsive2 {
+        position: absolute;
+        margin-left: 97px;
+        margin-top: 20px;
+        box-shadow: inset 0px -2px 2px grey;
+        width: 38px;
+        height: 25px;
+        background: #ffffff;
+        transform-origin: top center;
+        border-bottom-left-radius: 1000px;
+        border-bottom-right-radius: 1000px;
+        transform: rotate(90deg);
+    }
+    .quantity-control {
+        margin-left: 36px !important;
+    }
+    .total-price {
+        font-size: 18px;
+        margin-left: 0px;
+        display: flex;
+        justify-content: center;
+    }
+    .daftar {
+        width: 210px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .htm {
+        margin-top: 20px;
+    }
+    .note {
+        margin-left: -10px;
+    }
+    .row .note-seminar {
+        margin-left: 0px;
+        font-size: 12px;
+    }
+}
+
+
+/* Galaxy S5*/
+
+@media (max-width: 375.98px) {
+    .button-register {
+        margin-left: 0px;
+    }
+    /* Filter */
+    #filter-select {
+        width: 73px;
+        font-size: 7px;
+    }
+    .filter-city {
+        margin-left: -100px;
+    }
+    .filterby {
+        font-size: 10px;
+        margin-left: -26px;
+    }
+    .dates {
+        font-size: 8px;
+        padding: 4px;
+        margin-top: -27px;
+        margin-left: -53px;
+        position: absolute;
+    }
+    #seminar-event {
+        font-size: 7px;
+        position: absolute;
+        margin-top: -28px;
+        margin-left: 200px;
+    }
+    .events {
+        display: none;
+    }
+    /* Card Ticket */
+    .card-ticket {
+        width: 258px;
+        box-shadow: 0px 1px 2px rgb(151, 151, 151);
+        background-image: url('../images/seminar-org/line-horizontal.png');
+        background-size: 600px;
+        background-position: 0px;
+        background-position-y: 140px;
+    }
+    .locations {
+        margin-top: -10px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .location {
+        font-size: 10px;
+    }
+    .city {
+        font-size: 20px !important;
+        display: flex;
+    }
+    .investasi {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+    .desc {
+        margin-top: 20px;
+    }
+    .circle1 {
+        display: none;
+    }
+    .circle2 {
+        display: none;
+    }
+    .circle-responsive1 {
+        position: absolute;
+        margin-left: -45px;
+        margin-top: 20px;
+        box-shadow: inset 0px -2px 2px grey;
+        width: 38px;
+        height: 25px;
+        background: #ffffff;
+        transform-origin: top center;
+        border-bottom-left-radius: 1000px;
+        border-bottom-right-radius: 1000px;
+        transform: rotate(-90deg);
+    }
+    .circle-responsive2 {
+        position: absolute;
+        margin-left: 97px;
+        margin-top: 20px;
+        box-shadow: inset 0px -2px 2px grey;
+        width: 38px;
+        height: 25px;
+        background: #ffffff;
+        transform-origin: top center;
+        border-bottom-left-radius: 1000px;
+        border-bottom-right-radius: 1000px;
+        transform: rotate(90deg);
+    }
+    .quantity-control {
+        margin-left: 36px !important;
+    }
+    .total-price {
+        font-size: 18px;
+        margin-left: 0px;
+        display: flex;
+        justify-content: center;
+    }
+    .daftar {
+        width: 210px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .htm {
+        margin-top: 20px;
+    }
+    .note {
+        margin-left: -10px;
+    }
+    .row .note-seminar {
+        margin-left: 0px;
+    }
+}
+
+
+/* Iphone 5/SE */
+
+@media (max-width: 320.98px) {
+    /* Button Triger */
+    .button-register {
+        margin-left: 18px;
+    }
+    .button-trigger {
+        width: 240px;
+        font-family: Roboto;
+        font-size: 10px;
+    }
+    /* Filter */
+    #filter-select {
+        width: 73px;
+        font-size: 6px;
+    }
+    .filter-city {
+        margin-left: -100px;
+    }
+    .filterby {
+        font-size: 7px;
+        margin-left: 10px;
+    }
+    .dates {
+        font-size: 7px;
+        padding: 4px;
+        margin-top: -25px;
+        margin-left: -43px;
+        position: absolute;
+    }
+    #seminar-event {
+        font-size: 6px;
+        position: absolute;
+        margin-top: -26px;
+        margin-left: 181px;
+    }
+    /* Card Ticket */
+    .card-ticket {
+        width: 258px;
+        /* background-image: none; */
+    }
+    .locations {
+        margin-top: -10px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .location {
+        font-size: 10px;
+    }
+    .city {
+        font-size: 20px !important;
+        display: flex;
+    }
+    .investasi {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+    .desc {
+        margin-top: 20px;
+    }
+    .circle1 {
+        position: absolute;
+        margin-top: -26px;
+        margin-left: 80px;
+        box-shadow: inset 0px -2px 2px grey;
+        width: 50px;
+        height: 30px;
+        background: #ffffff;
+        transform-origin: top center;
+        border-bottom-left-radius: 1000px;
+        border-bottom-right-radius: 1000px;
+    }
+    .circle2 {
+        position: absolute;
+        margin-top: 27px;
+        margin-left: 80px;
+        box-shadow: inset 0px -2px 2px grey;
+        width: 50px;
+        height: 30px;
+        background: #ffffff;
+        transform-origin: top center;
+        border-bottom-left-radius: 1000px;
+        border-bottom-right-radius: 1000px;
+        transform: rotate(180deg);
+    }
+    .quantity-control {
+        margin-left: 42px;
+    }
+    .total-price {
+        font-size: 20px;
+        margin-left: 0px;
+        display: flex;
+        justify-content: center;
+    }
+    .daftar {
+        width: 210px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .htm {
+        margin-top: 20px;
+    }
+    .note {
+        margin-left: -10px;
+    }
+}
+
+
+/* Galaxy Fold */
+
+@media (max-width: 280.98px) {
+    /* Button */
+    .button-register {
+        margin-left: 0px;
+    }
+    /* Filter */
+    #filter-select {
+        width: 40px;
+        font-size: 5px;
+    }
+    .filter-city {
+        margin-left: -100px;
+    }
+    .filterby {
+        font-size: 5px;
+        margin-left: 10px;
+    }
+    .dates {
+        font-size: 6px;
+        padding: 5px;
+        margin-top: -24px;
+        margin-left: -55px;
+        position: absolute;
+    }
+    #seminar-event {
+        font-size: 6px;
+        position: absolute;
+        margin-top: -24px;
+        margin-left: 150px;
+    }
+    .button-trigger {
+        width: 230px;
+    }
+    /* Card Ticket */
+    .card-ticket {
+        width: 258px;
+        box-shadow: 0px 1px 2px rgb(151, 151, 151);
+        background-image: url('../images/seminar-org/line-horizontal.png');
+        background-size: 600px;
+        background-position: 0px;
+        background-position-y: 10px;
+    }
+    .locations {
+        margin-top: 0px;
+        display: flex;
+    }
+    .location {
+        display: none;
+    }
+    .city {
+        margin-top: 10px;
+    }
+    .investasi {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+    .desc {
+        margin-top: 20px;
+    }
+    .circle1 {
+        display: none;
+    }
+    .circle2 {
+        display: none;
+    }
+    .circle-responsive1 {
+        position: absolute;
+        margin-left: -45px;
+        margin-top: 20px;
+        box-shadow: inset 0px -2px 2px grey;
+        width: 38px;
+        height: 25px;
+        background: #ffffff;
+        transform-origin: top center;
+        border-bottom-left-radius: 1000px;
+        border-bottom-right-radius: 1000px;
+        transform: rotate(-90deg);
+    }
+    .circle-responsive2 {
+        position: absolute;
+        margin-left: 97px;
+        margin-top: 20px;
+        box-shadow: inset 0px -2px 2px grey;
+        width: 38px;
+        height: 25px;
+        background: #ffffff;
+        transform-origin: top center;
+        border-bottom-left-radius: 1000px;
+        border-bottom-right-radius: 1000px;
+        transform: rotate(90deg);
+    }
+    .quantity-control {
+        margin-left: 36px !important;
+    }
+    .total-price {
+        font-size: 18px;
+        margin-left: 0px;
+        display: flex;
+        justify-content: center;
+    }
+    .daftar {
+        width: 210px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .htm {
+        margin-top: 20px;
+    }
+    .note {
+        margin-left: -10px;
+    }
+}
+
+
+/* End css Media query */
+
+
+/* Modal */
+
+.modal-content {
+    margin-top: 0px;
+    padding: 20px;
+}
+
+.modal-content h1 {
+    font-size: 20px;
+    margin-top: 10px;
+    text-align: center;
+    font-family: Roboto
+}
+
+#image-formulir {
+    width: 180px;
+    position: absolute;
+    margin-left: -100px;
+    margin-top: -60px;
+}
+
+.form-control {
+    background-color: white;
+    border-radius: 10px;
+    padding: 0px 45px;
+    font-size: 14px;
+    font-family: DM Sans;
+}
+
+#icon-user {
+    width: 20px;
+    position: absolute;
+    margin-top: 45px;
+    margin-left: -30px;
+}
+
+#icon-mail {
+    width: 20px;
+    position: absolute;
+    margin-top: 45px;
+    margin-left: -30px;
+}
+
+#icon-phone {
+    width: 20px;
+    position: absolute;
+    margin-top: 45px;
+    margin-left: -30px;
+}
+
+#icon-location {
+    width: 20px;
+    position: absolute;
+    margin-top: 45px;
+    margin-left: -110px;
+}
+
+#choose {
+    width: 20px;
+    position: absolute;
+    margin-top: 45px;
+    margin-left: -80px;
+}
+
+#icon-clock {
+    width: 20px;
+    position: absolute;
+    margin-top: 45px;
+    margin-left: 20px;
+}
+
+#icon-other {
+    width: 20px;
+    position: absolute;
+    margin-top: 45px;
+    margin-left: -60px;
+}
