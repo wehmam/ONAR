@@ -24,7 +24,6 @@ class AuthLoginController extends Controller
 
         $user = Sentinel::authenticate($auth);
         if(!$user) {
-            alertNotify(false, "Authorization Failed!", $request);
             return redirect(url('backend/login'));
         }
         return redirect(url('/backend'));

@@ -16,6 +16,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset("assets/backend/css/sb-admin-2.min.css") }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     @yield('css')
     @yield('js-head') 
 
@@ -421,18 +422,19 @@
     <script src="{{ asset("assets/backend/vendor/bootstrap/js/bootstrap.bundle.min.js") }}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="{{ asset("assetvendor/jquery-easing/jquery.easing.min.js") }}"></script>
+    {{-- <script src="{{ asset("assetvendor/jquery-easing/jquery.easing.min.js") }}"></script> --}}
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset("assets/backend/js/sb-admin-2.min.js") }}"></script>
 
     <!-- Page level plugins -->
-    <script src="{{ asset("assets/backend/vendor/chart.js/Chart.min.js") }}"></script>
+    {{-- <script src="{{ asset("assets/backend/vendor/chart.js/Chart.min.js") }}"></script> --}}
 
     <!-- Page level custom scripts -->
-    <script src="{{ asset("assets/backend/js/demo/chart-area-demo.js") }}"></script>
-    <script src="{{ asset("assets/backend/js/demo/chart-pie-demo.js") }}"></script>
+    {{-- <script src="{{ asset("assets/backend/js/demo/chart-area-demo.js") }}"></script> --}}
+    {{-- <script src="{{ asset("assets/backend/js/demo/chart-pie-demo.js") }}"></script> --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     @yield('js')
 </body>
 
