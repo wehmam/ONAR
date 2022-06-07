@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\AdminUsers;
+use App\Models\AdminUser;
 use Cartalyst\Sentinel\Activations\EloquentActivation as Activation;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
@@ -43,7 +43,7 @@ class AuthLoginController extends Controller
         ];
 
         DB::beginTransaction();
-        $AdminUsers = new AdminUsers();
+        $AdminUsers = new AdminUser();
         $AdminUsers->email = $credentials['email'];
         $AdminUsers->password = Hash::make("admin");
         $AdminUsers->first_name = $credentials['first_name'];
