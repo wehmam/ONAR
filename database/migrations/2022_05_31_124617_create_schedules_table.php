@@ -15,7 +15,6 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger("schedule_type_id");
             $table->string("title");
             $table->string("city");
             $table->boolean("event_online")->default(0);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Registration;
 use Illuminate\Http\Request;
 
 class RegistrationController extends Controller
@@ -82,4 +83,26 @@ class RegistrationController extends Controller
     {
         //
     }
+
+    public function registrationAjaxData(Request $request) {
+        $schedules = Registration::paginate(25);
+        $arrayData = collect([]);
+
+        $schedules->each(function($q) use($arrayData) {
+            $arrayData->push([
+                $q["title"],
+                $q["city"],
+                $q["event_online"] ? "Online" : "Offline",
+                'Rp. '.number_format($q['price'],0,'.','.'),
+                '<a href="'.url('/backend/schedules/' . $q['id'] . '/edit').'" class="btn btn-md btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>'
+            ]);
+        });
+        return response()->json([
+            "draw"              => $request->get("draw"),
+            "recordsTotal"      => $schedules->total(),
+            "recordsFiltered"   => $schedules->total(),
+            "data"              => $arrayData->toArray()
+        ]);
+    }
+
 }

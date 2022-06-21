@@ -44,66 +44,108 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Form Product</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Form Schedules</h6>
             </div>
             <div class="card-body">
-                {{-- <form action="{{ Request::segment(3) == "create" ? url("backend/product") : url("backend/product/" . $product->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ Request::segment(3) == "create" ? url("backend/schedules") : url("backend/schedules/" . $schedule->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @if(Request::segment(3) != "create") 
+                    @if(Request::segment(3) != "create")
                         <input type="hidden" name="_method" value="PUT">
-                    @endif --}}
+                    @endif
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="categoryForm">Category</label>
-                            <select name="category_id" class="form-control" id="categoryForm" required>
-                                <option value="" selected disabled>Select category</option>
-                                {{-- @foreach ($category as $item)
-                                    <option value="{{ $item->id }}" {{ isset($product) ? ($product->category_id == $item->id ? "selected" : "") : "" }}>{{ $item->name }}</option>
-                                @endforeach --}}
+                            <label for="title">Title</label>
+                            <input type="text" name="title" value="{{ isset($schedule) ? $schedule->title : old("title") }}" class="form-control" id="title" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="city">City</label>
+                            <select name="city" class="form-control" id="cityForm" required>
+                                <option value="" selected disabled>Select city</option>
+                                @foreach (listProvinces() as $province)
+                                    <option value="{{ $province['provinsi_nama'] }}" {{ isset($schedule) && $province['provinsi_nama'] == $schedule->city ? "selected" : "" }}>{{ $province['provinsi_nama'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="#">Event Type</label>
+                            <select name="event_online" class="form-control" required>
+                                <option value="1" {{ isset($schedule) && $schedule->event_online ? "selected" : "" }}>Online</option>
+                                <option value="0" {{ isset($schedule) && !$schedule->event_online ? "selected" : "" }}>Offline</option>
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="title">Title</label>
-                            <input type="text" name="title" value="{{ isset($product) ? $product->title : old("title") }}" class="form-control" id="title" required>
+                            <label for="#">Event Status</label>
+                            <select name="event_status" class="form-control" required>
+                                <option value="1" {{ isset($schedule) && $schedule->event_status ? "selected" : "" }}>Aktif</option>
+                                <option value="0" {{ isset($schedule) && !$schedule->event_status ? "selected" : "" }}>Non Aktif</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="quantity">Quantity</label>
-                            <input type="number" class="form-control" name="qty" value="{{ isset($product) ? $product->qty : old("qty") }}" id="quantity" placeholder="ex: 1" required>
+                            <label for="price">Price</label>
+                            <input type="number" name="price" value="{{ isset($schedule) ? $schedule->price : 0 }}" class="form-control" id="price">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="price">Price</label>
-                            <input type="number" class="form-control" name="price" value="{{ isset($product) ? $product->price : old("price") }}" id="price" placeholder="Ex : 100000" required>
+                            <label for="event_date">Event Date</label>
+                            <input type="date" name="event_date" class="form-control" value="{{ isset($schedule) ? $schedule->event_date : "" }}" id="event_date">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="desciption">Description</label>
-                        <textarea name="description" id="description" class="form-control" cols="10" rows="5">{{ isset($product) ? $product->description : old("description") }}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="productActive">Product Active</label>
-                        <select name="is_active" class="form-control" id="isActive" required>
-                            <option value="1" {{ isset($product) ? ($product->is_active ? "selected" : "") : "" }}>Yes</option>
-                            <option value="0" {{ isset($product) ? (!$product->is_active ? "selected" : "") : "" }}>No</option>
-                        </select>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="start">Start</label>
+                            <input type="time" name="start" value="{{ isset($schedule) ? $schedule->start_hour : "" }}" class="form-control" id="start">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="end">End</label>
+                            <input type="time" name="end" value="{{ isset($schedule) ? $schedule->end_hour : "" }}" class="form-control" id="end">
+                        </div>
                     </div>
 
-                    <div class="form-group col-md-12">
-                        <label for="productActive">Product Images</label>
-                        <span class=" ml-2">
-                            <a class="btn btn-sm btn-success" id="photo-add-id" data-key="999"><i class="fa fa-plus"></i></a>
-                        </span>
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="form-group">
-                                    <input type="file" name="upload_image[]" class="form-control rounded-8px product_image" {{ isset($product) ? "" :"required" }}>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="description">Description</label>
+                            <textarea name="description" class="form-control" id="description" cols="30" rows="5">{{ isset($schedule) ? $schedule->description : "" }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="max_capacity">Max Capacity</label>
+                            <input type="number" name="max_capacity" value="{{ isset($schedule) ? $schedule->max_capacity : "" }}" class="form-control" id="max_capacity">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="event_link">Event Link</label>
+                            <input type="text" name="event_link" value="{{ isset($schedule) ? $schedule->event_link : "" }}" class="form-control" id="event_link">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="productActive">Product Images</label>
+                            {{-- <span class=" ml-2">
+                                <a class="btn btn-sm btn-success" id="photo-add-id" data-key="999"><i class="fa fa-plus"></i></a>
+                            </span> --}}
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <input type="file" name="upload_image" onchange="loadFile(event)" class="form-control rounded-8px product_image" {{ isset($schedule) ? "" :"required" }}>
+                                    </div>
                                 </div>
                             </div>
+                            {{-- <div id="photo-new" class="row"></div> --}}
                         </div>
-                        <div id="photo-new" class="row"></div>
+
+                        <div class="form-group col-md-6 {{ isset($schedule) ? "" : "hidden" }}" id="previewImg">
+                            <label for="productActive">Preview Images</label>
+                            <img src="{{ isset($schedule) ? url(Storage::url($schedule->image)) : "" }}" id="output" class="img-thumbnail w-50" alt="">
+                        </div>
                     </div>
-                    @if(isset($product))
+
+
+                    {{-- @if(isset($product))
                         <div class="form-group">
                             <h3 class="mb-3">Old Photos</h3>
                             <div class="row">
@@ -119,7 +161,7 @@
                                 @endforeach
                             </div>
                         </div>
-                    @endif
+                    @endif --}}
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>
@@ -130,11 +172,11 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#categoryForm').select2();
-                $(document).on("click", "#photo-add-id", function (e) {
+            $('#cityForm').select2();
+            $(document).on("click", "#photo-add-id", function (e) {
                 e.preventDefault();
                 var field     = $("#photo-new");
-                const html      = 
+                const html      =
                 `
                 <div class="row" id="photo-new">
                     <div class="col-md-10">
@@ -183,8 +225,8 @@
         }
 
         let loadFile = (event) => {
-            document.getElementById("cardImage").removeAttribute("hidden");
             let reader = new FileReader()
+            document.getElementById('previewImg').classList.remove('hidden');
             reader.onload = function() {
                 let output = document.getElementById("output")
                 output.src = reader.result

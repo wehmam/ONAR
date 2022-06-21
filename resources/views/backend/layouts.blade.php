@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>@yield("title", "SIMINAR")</title>
+    <title>@yield("title", "ONAR")</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset("assets/backend/vendor/fontawesome-free/css/all.min.css") }}" rel="stylesheet" type="text/css">
@@ -18,7 +18,7 @@
     <link href="{{ asset("assets/backend/css/sb-admin-2.min.css") }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     @yield('css')
-    @yield('js-head') 
+    @yield('js-head')
 
 </head>
 
@@ -26,7 +26,7 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-       
+
         <!-- sidebar component -->
             @include('backend.component.sidebar')
         <!-- sidebar component ends -->
@@ -41,7 +41,7 @@
                     @include('backend.component.topbar')
                 <!-- End of Topbar component ends -->
 
-                <!-- Begin Page Content MAIN CONTENT DISNI BRO--> 
+                <!-- Begin Page Content MAIN CONTENT DISNI BRO-->
                     <div class="container-fluid">
 
                         <!-- Page Heading -->
@@ -406,7 +406,7 @@
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <form method="POST" action="{{ url('backend/logout') }}">
                         @csrf
-        
+
                         <button type="submit" class="btn btn-primary">
                             Logout
                         </button>

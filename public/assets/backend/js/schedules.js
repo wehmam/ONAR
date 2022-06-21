@@ -19,7 +19,7 @@ $(document).ready(function() {
 		columnDefs: [{
 			className: 'text-center',
 			orderable: false,
-			targets: [0, 1, 2, 3]
+			targets: [0, 1, 2, 3, 4]
 		}],
 		drawCallback: function( settings ) {
 			$('html, body').animate({

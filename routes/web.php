@@ -21,15 +21,21 @@ use App\Http\Controllers\Frontend\IndexController;
 Route::get('/', [IndexController::class, 'home']);
 
 Route::middleware(['guest'])->group(function () {
-    Route::get('/login', [FrontendAuthLoginController::class, 'login'])->name("login");   
+    Route::get('/login', [FrontendAuthLoginController::class, 'login'])->name("login");
     Route::post('/login', [FrontendAuthLoginController::class, "loginPost"]);
     Route::get('/register', [FrontendAuthLoginController::class, "register"])->middleware("guest");
-    Route::post('/register', [FrontendAuthLoginController::class, "registerNewMember"]); 
+    Route::post('/register', [FrontendAuthLoginController::class, "registerNewMember"]);
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [IndexController::class, 'profile']);  
-    Route::post('/logout', [FrontendAuthLoginController::class, "logout"]);  
+    Route::get('/profile', [IndexController::class, 'profile']);
+    Route::prefix('events')->group(function () {
+        Route::get('/ajax', [IndexController::class, 'seeMoreAjaxEventList']);
+        Route::get('/', [IndexController::class, 'eventList']);
+        Route::get('/{id}', [IndexController::class, 'eventDetail']);
+    });
+
+    Route::post('/logout', [FrontendAuthLoginController::class, "logout"]);
 });
 
 
@@ -45,10 +51,7 @@ Route::prefix('backend')->group(function () {
         });
         Route::resource('registrations', RegistrationController::class);
 
-        Route::prefix('schedules')->group(function () {
-            Route::resource('/', ScheduleController::class);
-            Route::get('/ajax', [ScheduleController::class, "schedulesAjaxData"]);
-            
-        });
+        Route::get('/schedules/ajax', [ScheduleController::class, "schedulesAjaxData"]);
+        Route::resource('/schedules', ScheduleController::class);
     });
 });

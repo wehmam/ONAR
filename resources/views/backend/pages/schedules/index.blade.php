@@ -21,6 +21,7 @@
                             <th>City</th>
                             <th>Status</th>
                             <th>Price</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                 </table>
