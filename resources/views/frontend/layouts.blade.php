@@ -32,7 +32,9 @@
 
   <!-- Template Main CSS File -->
   <link href="{{ asset("assets/frontend/css/main.css") }}" rel="stylesheet">
+  @yield('external-css')
 
+  
 </head>
 
 <body>

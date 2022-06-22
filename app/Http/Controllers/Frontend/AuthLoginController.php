@@ -22,7 +22,7 @@ class AuthLoginController extends Controller
         $validator = \Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'regex:/(01)[0-9]{9}/'],
+            // 'phone' => ['required', 'regex:/(01)[0-9]{9}/'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'password_confirmation' => 'required_with:password|same:password'
         ]);
@@ -32,7 +32,6 @@ class AuthLoginController extends Controller
                 ->withInput()
                 ->withErrors($validator);
         }
-        dd($request->all());
 
         $user = User::create([
             'name' => $request->name,

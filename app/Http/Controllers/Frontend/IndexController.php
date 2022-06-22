@@ -31,4 +31,8 @@ class IndexController extends Controller
         $event = Schedule::findOrFail($id);
         return view('frontend.pages.events-detail', compact('event'));
     }
+
+    public function paymentEvents(Request $request) {
+        return view('frontend.pages.payments');
+    }
 }

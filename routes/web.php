@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/ajax', [IndexController::class, 'seeMoreAjaxEventList']);
         Route::get('/', [IndexController::class, 'eventList']);
         Route::get('/{id}', [IndexController::class, 'eventDetail']);
+        Route::get('/pay/{invoice?}', [IndexController::class, 'paymentEvents']);
     });
 
     Route::post('/logout', [FrontendAuthLoginController::class, "logout"]);
@@ -50,7 +51,6 @@ Route::prefix('backend')->group(function () {
             return view("backend.pages.dashboard");
         });
         Route::resource('registrations', RegistrationController::class);
-
         Route::get('/schedules/ajax', [ScheduleController::class, "schedulesAjaxData"]);
         Route::resource('/schedules', ScheduleController::class);
     });
