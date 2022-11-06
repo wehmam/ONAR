@@ -29,7 +29,7 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item {{ Request::segment(2) == "category" ? "active" : ""  }}">
-        <a class="nav-link" href="{{ url("/backend/schedules") }}">
+        <a class="nav-link" href="{{ url("/backend/events") }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Events</span></a>
     </li>

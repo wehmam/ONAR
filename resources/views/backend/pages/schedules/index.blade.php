@@ -1,6 +1,6 @@
 @extends("backend.layouts")
 @section("title", "Dashboard")
-@section("content-title", "Schedules")
+@section("content-title", "Events")
 @section('css')
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 @endsection
@@ -10,7 +10,7 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">List Schedules <span class="float-right"> <a href="{{ url("backend/schedules/create") }}" class="btn btn-success btn-sm" ><i class="fa fa-plus"> Schedules</i></a></span></h6>
+        <h6 class="m-0 font-weight-bold text-primary">List Events <span class="float-right"> <a href="{{ url("backend/events/create") }}" class="btn btn-success btn-sm" ><i class="fa fa-plus"> Events</i></a></span></h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">

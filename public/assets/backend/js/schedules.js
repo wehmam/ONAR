@@ -9,7 +9,7 @@ $(document).ready(function() {
 		ordering: false,
 		deferRender: true,
 		ajax: {
-			'url': "schedules/ajax",
+			'url': "events/ajax",
 		},
 		responsive: {
 			details: {

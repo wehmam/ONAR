@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -178,16 +179,16 @@ class ScheduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function schedulesAjaxData(Request $request) {
-        $schedules = Schedule::paginate(25);
+        $schedules = Event::paginate(25);
         $arrayData = collect([]);
 
         $schedules->each(function($q) use($arrayData) {
             $arrayData->push([
-                $q["title"],
-                $q["city"],
-                $q["event_online"] ? "Online" : "Offline",
-                'Rp. '.number_format($q['price'],0,'.','.'),
-                '<a href="'.url('/backend/schedules/' . $q['id'] . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>'
+                $q->eventDetail->title ?? "",
+                $q->eventDetail->event_location ?? "",
+                $q["event_type"] == "online" ? "Online" : "Offline",
+                'Rp. '.number_format($q->eventDetail->price,0,'.','.') ?? "Free",
+                '<a href="'.url('/backend/events/' . $q['id'] . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>'
             ]);
         });
         return response()->json([

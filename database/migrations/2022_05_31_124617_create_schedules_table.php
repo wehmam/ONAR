@@ -13,25 +13,25 @@ class CreateSchedulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedules', function (Blueprint $table) {
-            $table->id();
-            $table->string("title");
-            $table->string("city");
-            $table->boolean("event_online")->default(0);
-            $table->boolean("event_status")->default(1);
-            $table->decimal('price', 15, 2);
-            $table->date("event_date");
-            $table->time("start_hour");
-            $table->time("end_hour");
-            $table->string("image")->default("");
-            $table->text("description")->nullable();
-            $table->string("google_calendar_id")->default("");
-            $table->integer("max_capacity");
-            $table->integer("current_capacity");
-            $table->string("event_link")->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        // Schema::create('schedules', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string("title");
+        //     $table->string("city");
+        //     $table->boolean("event_online")->default(0);
+        //     $table->boolean("event_status")->default(1);
+        //     $table->decimal('price', 15, 2);
+        //     $table->date("event_date");
+        //     $table->time("start_hour");
+        //     $table->time("end_hour");
+        //     $table->string("image")->default("");
+        //     $table->text("description")->nullable();
+        //     $table->string("google_calendar_id")->default("");
+        //     $table->integer("max_capacity");
+        //     $table->integer("current_capacity");
+        //     $table->string("event_link")->nullable();
+        //     $table->timestamps();
+        //     $table->softDeletes();
+        // });
     }
 
     /**
@@ -41,6 +41,6 @@ class CreateSchedulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules');
+        // Schema::dropIfExists('schedules');
     }
 }

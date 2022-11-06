@@ -24,6 +24,7 @@ class AdminSeeder extends Seeder
                 "last_name"     => "Admin",
             ]
         ]);
+
         DB::table("activations")->insert([
             [
                 "user_id"       => 1,

@@ -1,6 +1,6 @@
 @extends("backend.layouts")
 @section('title', 'Dashboard')
-@section('content-title', 'Form Schedules')
+@section('content-title', 'Form Events')
 @section('css')
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -44,10 +44,10 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Form Schedules</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Form Events</h6>
             </div>
             <div class="card-body">
-                <form action="{{ Request::segment(3) == "create" ? url("backend/schedules") : url("backend/schedules/" . $schedule->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ Request::segment(3) == "create" ? url("backend/events") : url("backend/events/" . $event->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @if(Request::segment(3) != "create")
                         <input type="hidden" name="_method" value="PUT">
@@ -55,14 +55,14 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="title">Title</label>
-                            <input type="text" name="title" value="{{ isset($schedule) ? $schedule->title : old("title") }}" class="form-control" id="title" required>
+                            <input type="text" name="title" value="{{ $event->eventDetail->title ?? old("title") }}" class="form-control" id="title" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="city">City</label>
-                            <select name="city" class="form-control" id="cityForm" required>
+                            <label for="event_location">Event Location</label>
+                            <select name="event_location" class="form-control" id="cityForm" required>
                                 <option value="" selected disabled>Select city</option>
                                 @foreach (listProvinces() as $province)
-                                    <option value="{{ $province['provinsi_nama'] }}" {{ isset($schedule) && $province['provinsi_nama'] == $schedule->city ? "selected" : "" }}>{{ $province['provinsi_nama'] }}</option>
+                                    <option value="{{ $province['provinsi_nama'] }}" {{ isset($event) && $province['provinsi_nama'] == $event->eventDetail->event_location ? "selected" : "" }}>{{ $province['provinsi_nama'] }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -70,51 +70,63 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="#">Event Type</label>
-                            <select name="event_online" class="form-control" required>
-                                <option value="1" {{ isset($schedule) && $schedule->event_online ? "selected" : "" }}>Online</option>
-                                <option value="0" {{ isset($schedule) && !$schedule->event_online ? "selected" : "" }}>Offline</option>
+                            <select name="event_type" class="form-control" required>
+                                <option value="online" {{ isset($event) && $event->event_type == "online" ? "selected" : "" }}>Online</option>
+                                <option value="offline" {{ isset($event) && $event->event_type == "offline" ? "selected" : "" }}>Offline</option>
                             </select>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="#">Event Status</label>
-                            <select name="event_status" class="form-control" required>
-                                <option value="1" {{ isset($schedule) && $schedule->event_status ? "selected" : "" }}>Aktif</option>
-                                <option value="0" {{ isset($schedule) && !$schedule->event_status ? "selected" : "" }}>Non Aktif</option>
+                            <select name="has_active" class="form-control" required>
+                                <option value="1" {{ isset($event) && $event->event_status ? "selected" : "" }}>Aktif</option>
+                                <option value="0" {{ isset($event) && !$event->event_status ? "selected" : "" }}>Non Aktif</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="price">Price</label>
-                            <input type="number" name="price" value="{{ isset($schedule) ? $schedule->price : 0 }}" class="form-control" id="price">
+                            <input type="number" name="price" value="{{ isset($event) ? $event->eventDetail->price : 0 }}" class="form-control" id="price">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="event_date">Event Date</label>
-                            <input type="date" name="event_date" class="form-control" value="{{ isset($schedule) ? $schedule->event_date : "" }}" id="event_date">
+                            <input type="date" name="event_date" class="form-control" value="{{ isset($event) ? $event->eventDetail->event_date : "" }}" id="event_date">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="start">Start</label>
-                            <input type="time" name="start" value="{{ isset($schedule) ? $schedule->start_hour : "" }}" class="form-control" id="start">
+                            <input type="time" name="start_hour" value="{{ isset($event) ? $event->eventDetail->start_hour : "" }}" class="form-control" id="start">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="end">End</label>
-                            <input type="time" name="end" value="{{ isset($schedule) ? $schedule->end_hour : "" }}" class="form-control" id="end">
+                            <input type="time" name="end_hour" value="{{ isset($event) ? $event->eventDetail->end_hour : "" }}" class="form-control" id="end">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="description">Description</label>
-                            <textarea name="description" class="form-control" id="description" cols="30" rows="5">{{ isset($schedule) ? $schedule->description : "" }}</textarea>
+                            <textarea name="description" class="form-control" id="description" cols="30" rows="5">{{ isset($event) ? $event->eventDetail->description : "" }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="event_location">Company (Penyelenggara)</label>
+                            <select name="company_id" class="form-control" id="companySelect" required>
+                                <option value="" selected disabled>Select Company</option>
+                                @foreach ($companies as $company)
+                                    <option value="{{ $company['id'] }}" {{ isset($event) && $company['id'] == $event->company_id ? "selected" : "" }}>{{ $company['name'] }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="max_capacity">Max Capacity</label>
-                            <input type="number" name="max_capacity" value="{{ isset($schedule) ? $schedule->max_capacity : "" }}" class="form-control" id="max_capacity">
+                            <input type="number" name="max_capacity" value="{{ isset($event) ? $event->eventDetail->max_capacity : "" }}" class="form-control" id="max_capacity">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="event_link">Event Link</label>
@@ -124,23 +136,23 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="productActive">Product Images</label>
+                            <label for="productActive">Event Images</label>
                             {{-- <span class=" ml-2">
                                 <a class="btn btn-sm btn-success" id="photo-add-id" data-key="999"><i class="fa fa-plus"></i></a>
                             </span> --}}
                             <div class="row">
                                 <div class="col-md-10">
                                     <div class="form-group">
-                                        <input type="file" name="upload_image" onchange="loadFile(event)" class="form-control rounded-8px product_image" {{ isset($schedule) ? "" :"required" }}>
+                                        <input type="file" name="upload_image" onchange="loadFile(event)" class="form-control rounded-8px product_image" {{ isset($event) ? "" :"required" }}>
                                     </div>
                                 </div>
                             </div>
                             {{-- <div id="photo-new" class="row"></div> --}}
                         </div>
 
-                        <div class="form-group col-md-6 {{ isset($schedule) ? "" : "hidden" }}" id="previewImg">
+                        <div class="form-group col-md-6 {{ isset($event) ? "" : "hidden" }}" id="previewImg">
                             <label for="productActive">Preview Images</label>
-                            <img src="{{ isset($schedule) ? url(Storage::url($schedule->image)) : "" }}" id="output" class="img-thumbnail w-50" alt="">
+                            <img src="{{ isset($event) ? Storage::url($event->eventDetail->banner) : "" }}" id="output" class="img-thumbnail w-50" alt="">
                         </div>
                     </div>
 
@@ -173,6 +185,8 @@
     <script>
         $(document).ready(function() {
             $('#cityForm').select2();
+            $('#companySelect').select2();
+
             $(document).on("click", "#photo-add-id", function (e) {
                 e.preventDefault();
                 var field     = $("#photo-new");

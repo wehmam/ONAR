@@ -16,7 +16,7 @@ class CreateRegistrationsTable extends Migration
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger("user_id");
-            $table->unsignedInteger("schedule_id");
+            $table->unsignedInteger("event_id");
             $table->string("invoice")->unique();
             $table->decimal("total_price", 15, 2);
             $table->string("status_paid")->default("PENDING");

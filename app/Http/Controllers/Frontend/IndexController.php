@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
     public function home() {
-        $events = Schedule::take(6)->inRandomOrder()->get();
+        $events = Event::take(6)->inRandomOrder()->get();
         return view('frontend.pages.home', compact('events'));
     }
 
@@ -18,17 +19,17 @@ class IndexController extends Controller
     }
 
     public function eventList(Request $request) {
-        $events = Schedule::paginate(6);
+        $events = Event::paginate(6);
         return view('frontend.pages.events' , compact('events'));
     }
 
     public function seeMoreAjaxEventList(Request $request) {
-        $events = Schedule::paginate(6);
+        $events = Event::paginate(6);
         return response()->json($events);
     }
 
     public function eventDetail($id) {
-        $event = Schedule::findOrFail($id);
+        $event = Event::findOrFail($id);
         return view('frontend.pages.events-detail', compact('event'));
     }
 

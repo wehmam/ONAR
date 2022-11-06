@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Registration;
+use App\Models\Company;
+use App\Models\Event;
+use App\Repository\EventRepository;
 use Illuminate\Http\Request;
 
-class RegistrationController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +17,7 @@ class RegistrationController extends Controller
      */
     public function index()
     {
-        return view('backend.pages.registration.index');
+        return view("backend.pages.schedules.index");
     }
 
     /**
@@ -25,7 +27,8 @@ class RegistrationController extends Controller
      */
     public function create()
     {
-        //
+        $companies = Company::get();
+        return view("backend.pages.schedules.form", compact("companies"));
     }
 
     /**
@@ -36,7 +39,8 @@ class RegistrationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $response = (new EventRepository())->createOrUpdateEvent($request->all());
+        return redirect(url("/backend/events"));
     }
 
     /**
@@ -56,9 +60,10 @@ class RegistrationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Event $event)
     {
-        //
+        $companies = Company::get();
+        return view("backend.pages.schedules.form", compact('event', 'companies'));
     }
 
     /**
@@ -68,9 +73,10 @@ class RegistrationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Event $event)
     {
-        //
+        $response = (new EventRepository())->createOrUpdateEvent($request->all(), $event->id);
+        return redirect(url("/backend/events"));
     }
 
     /**
@@ -84,17 +90,23 @@ class RegistrationController extends Controller
         //
     }
 
-    public function registrationAjaxData(Request $request) {
-        $schedules = Registration::paginate(25);
+    /**
+     * Get Data Event for datatables.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function eventsAjaxData(Request $request) {
+        $schedules = Event::paginate(25);
         $arrayData = collect([]);
 
         $schedules->each(function($q) use($arrayData) {
             $arrayData->push([
-                $q["title"],
-                $q["city"],
-                $q["event_online"] ? "Online" : "Offline",
-                'Rp. '.number_format($q['price'],0,'.','.'),
-                '<a href="'.url('/backend/events/' . $q['id'] . '/edit').'" class="btn btn-md btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>'
+                $q->eventDetail->title ?? "",
+                $q->eventDetail->event_location ?? "",
+                $q["event_type"] == "online" ? "Online" : "Offline",
+                'Rp. '.number_format($q->eventDetail->price,0,'.','.') ?? "Free",
+                '<a href="'.url('/backend/events/' . $q['id'] . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>'
             ]);
         });
         return response()->json([
@@ -104,5 +116,4 @@ class RegistrationController extends Controller
             "data"              => $arrayData->toArray()
         ]);
     }
-
 }
