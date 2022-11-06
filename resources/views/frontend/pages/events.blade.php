@@ -15,17 +15,17 @@
                 <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
                     <div class="service-item">
                     <div class="img">
-                        <img src="{{ url(Storage::url($event->image)) }}" class="img-fluid" style=" width:  100%;height: 350px;object-fit: cover;" alt="">
+                        <img src="{{ Storage::url($event->eventDetail->banner) }}" class="img-fluid" style=" width:  100%;height: 350px;object-fit: cover;" alt="">
                     </div>
                     <div class="details position-relative">
                         <div class="icon">
                         <i class="bi bi-activity"></i>
                         </div>
                         <a href="{{ url('events/' . $event->id) }}" target="_blank" class="stretched-link">
-                        <h3>{{ $event->title }}</h3>
-                        <h4>{{ $event->price > 0 ?  "Rp . " . number_format($event->price) : "Free" }}</h5>
+                        <h3>{{ $event->eventDetail->title }}</h3>
+                        <h4>{{ $event->eventDetail->price > 0 ?  "Rp . " . number_format($event->eventDetail->price) : "Free" }}</h5>
                         </a>
-                        <p>{{ Str::limit($event->description), 20 , '...' }}</p>
+                        <p>{{ Str::limit($event->eventDetail->description), 20 , '...' }}</p>
                     </div>
                     </div>
                 </div>
