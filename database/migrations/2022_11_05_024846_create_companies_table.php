@@ -19,6 +19,7 @@ class CreateCompaniesTable extends Migration
             $table->text("description")->nullable();
             $table->string("address")->nullable();
             $table->string("phone_number")->nullable();
+            $table->string("image")->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

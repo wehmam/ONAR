@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AuthLoginController;
+use App\Http\Controllers\Backend\CompanyController;
 use App\Http\Controllers\Backend\EventController;
 use App\Http\Controllers\Backend\RegistrationController;
 use App\Http\Controllers\Backend\ScheduleController;
@@ -56,5 +57,9 @@ Route::prefix('backend')->group(function () {
         Route::get('events/ajax', [EventController::class, "eventsAjaxData"]);
         Route::resource('/schedules', ScheduleController::class);
         Route::resource('events', EventController::class);
+
+        Route::get('companies/ajax', [CompanyController::class, "companyAjaxData"]);
+        Route::resource('companies', CompanyController::class);
+
     });
 });

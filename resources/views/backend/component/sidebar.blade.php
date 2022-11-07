@@ -34,6 +34,12 @@
             <span>Events</span></a>
     </li>
 
+    <li class="nav-item {{ Request::segment(2) == "companies" ? "active" : ""  }}">
+        <a class="nav-link" href="{{ url("/backend/companies") }}">
+            <i class="fa fa-shopping-basket"></i>
+            <span>Company</span></a>
+    </li>
+
     <li class="nav-item {{ Request::segment(2) == "product" ? "active" : ""  }}">
         <a class="nav-link" href="{{ url("/backend/participants") }}">
             <i class="fa fa-shopping-bag"></i>
