@@ -17,4 +17,8 @@ class Event extends Model
     public function company() {
         return $this->belongsTo(Company::class);
     }
+
+    public function eventLabelLists() {
+        return $this->hasMany(EventLabelList::class, "event_id");
+    }
 }

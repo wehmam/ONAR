@@ -121,6 +121,15 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="event_label">Label Event</label>
+                            <select name="event_label[]" id="event_label" class="form-control" multiple="multiple" required>
+                                <option value="Teknologi">Teknologi</option>
+                                <option value="Sains">Sains</option>
+                                <option value="Health">Health</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="form-row">
@@ -186,6 +195,7 @@
         $(document).ready(function() {
             $('#cityForm').select2();
             $('#companySelect').select2();
+            $('#event_label').select2();
 
             $(document).on("click", "#photo-add-id", function (e) {
                 e.preventDefault();

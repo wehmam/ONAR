@@ -23,7 +23,7 @@ class EventRepository {
 
             $events->company_id = $params["company_id"];
             $events->event_type = $params["event_type"];
-            $events->has_active = 1;
+            $events->has_active = $params["has_active"];
             
             if(!$findEvent) {
                 $lastEvent = Event::whereNotNull('event_number')
@@ -87,6 +87,18 @@ class EventRepository {
             $eventDetail->max_capacity = $params["max_capacity"];
             $eventDetail->link_event = $params["event_link"];
             $eventDetail->save();
+
+            $labels = collect([]);
+            foreach($params["event_label"] as $eventLabel) {
+                $labels->push([
+                    "name"  => $eventLabel
+                ]); 
+            }
+
+            if(!is_null($events->eventListLabels)) {
+                $events->eventLabelLists()->delete();
+            }
+                $events->eventLabelLists()->createMany($labels->toArray());
 
             DB::commit();
 

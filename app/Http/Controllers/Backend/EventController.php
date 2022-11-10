@@ -39,7 +39,39 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = \Validator::make($request->all(), [
+            "company_id"    => "required",
+            "event_type"    => "required",
+            "has_active"    => "required|boolean",
+            "title"         => "required",
+            "price"         => "required",
+            "event_date"    => "required",
+            "start_hour"    => "required",
+            "end_hour"      => "required",
+            "upload_image"  => "image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "event_link"    => "required_if:event_type,==,online",
+            "event_location" => "required",
+            "description" => "required",
+            "max_capacity" => "required",
+            "event_link" => "required_if:event_type,==,online",
+            "upload_image" => "image|mimes:jpeg,png,jpg,gif,svg|max:2048"
+        ]);
+
+        if($validator->fails()) {
+            alertNotify(false, collect($validator->messages()->first())->implode(", "));
+            return redirect()->back()
+                ->withInput()
+                ->withErrors($validator);
+        }
+
         $response = (new EventRepository())->createOrUpdateEvent($request->all());
+        if(!$response["status"]) {
+            alertNotify(false, $response["data"]);
+            return redirect()->back()
+                ->withInput();
+        }
+
+        alertNotify(true, $response["data"]);
         return redirect(url("/backend/events"));
     }
 
@@ -75,7 +107,51 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
+        $validator = \Validator::make($request->all(), [
+            "company_id"    => "required",
+            "event_type"    => "required",
+            "has_active"    => "required|boolean",
+            "title"         => "required",
+            "price"         => "required",
+            "event_date"    => "required",
+            "start_hour"    => "required",
+            "end_hour"      => "required",
+            "upload_image"  => "image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "event_link"    => "required_if:event_type,==,online",
+            "event_location" => "required",
+            "description" => "required",
+            "max_capacity" => "required",
+            "event_link" => "required_if:event_type,==,online",
+            "event_label"   => "required|array"
+        ]);
+
+
+        if($validator->fails()) {
+            alertNotify(false, collect($validator->messages()->first())->implode(", "));
+            return redirect()->back()
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        if($request->hasFile("upload_image")) {
+            $validator = \Validator::make($request->all(), [
+                "upload_image" => "image|mimes:jpeg,png,jpg,gif,svg|max:2048"
+            ]);
+
+            alertNotify(false, collect($validator->messages()->first())->implode(", "));
+            if($validator->fails()) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors($validator);
+            }
+        }
+
         $response = (new EventRepository())->createOrUpdateEvent($request->all(), $event->id);
+        alertNotify($response["status"], $response["data"]);
+        if(!$response["status"]) {
+            return redirect()->back()
+                ->withInput();
+        }
         return redirect(url("/backend/events"));
     }
 
