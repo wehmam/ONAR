@@ -7,7 +7,21 @@
     <div class="container" data-aos="fade-up">
 
         <div class="section-header mt-5">
-        <h2>Events</h2>
+            <h2>Events</h2>
+        </div>
+
+        <div class="row gy-5">
+            <div class="input-group mb-5">
+                <input type="text" class="form-control text-center" placeholder="Cari Seminar (Kota, Seminar Offline / Online, Judul, Kategori)">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" style="background-color:#0ea2bd; color:white"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            {{-- <div class="col-md-12">
+                <div class="form-outline mb-4">
+                    <input type="search" class="form-control text-center" id="datatable-search-input" >
+                </div>
+            </div> --}}
         </div>
 
         <div class="row gy-5" id="events-data">
@@ -25,15 +39,14 @@
                         <h3>{{ $event->eventDetail->title }}</h3>
                         <h4>{{ $event->eventDetail->price > 0 ?  "Rp . " . number_format($event->eventDetail->price) : "Free" }}</h5>
                         </a>
-                        <p>{{ Str::limit($event->eventDetail->description), 20 , '...' }}</p>
+                        <p>{{ $event->eventDetail->limit_description }}</p>
                     </div>
                     </div>
                 </div>
             @endforeach
         </div>
-
         <div class="text-center mt-5">
-        <a href="javascript:;" class="btn btn-md" onclick="seeMore()" style="background-color:#0ea2bd; color:white">See More</a>
+            <a href="javascript:;" class="btn btn-md" onclick="seeMore()" id="btn-seemore" style="background-color:#0ea2bd; color:white">See More</a>
         </div>
 
     </div>

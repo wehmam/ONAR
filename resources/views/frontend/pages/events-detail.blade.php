@@ -10,6 +10,15 @@
             width:50px;
             height:50px;
         }
+
+        .custom-tag-lists {
+            padding: 6px 12px;
+            display: inline-block;
+            border-radius: 20px;
+            font-size: 1rem;
+            color: #ebfcfc;
+            background-color: #2cc8d3
+        }
     </style>
 @endsection
 
@@ -41,6 +50,20 @@
                             <div class="col-md-4 mt-3">
                                 <h6>{{ $event->company->name }}</h6>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mt-5">
+                    <h5 class="text-muted">Event Category : </h5>
+
+                    <div class="mt-2">
+                        <div class="row">
+                            @foreach ($event->eventLabelLists as $key => $label)
+                                <div class="col-md-3 mt-2">
+                                    <span class="custom-tag-lists text-center">{{ $label->name }}</span>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

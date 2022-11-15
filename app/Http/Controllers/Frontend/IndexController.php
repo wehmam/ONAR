@@ -24,7 +24,7 @@ class IndexController extends Controller
     }
 
     public function seeMoreAjaxEventList(Request $request) {
-        $events = Event::paginate(6);
+        $events = Event::with(["eventDetail"])->paginate(6);
         return response()->json($events);
     }
 
