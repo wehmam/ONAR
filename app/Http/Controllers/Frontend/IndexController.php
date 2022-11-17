@@ -19,7 +19,22 @@ class IndexController extends Controller
     }
 
     public function eventList(Request $request) {
-        $events = Event::paginate(6);
+        $keyword = $request->get("q");
+        $events = Event::query();
+        if($keyword) {
+            $events->where("event_type", "LIKE", "%$keyword%")
+                ->orWhereHas("eventLabelLists", function($q) use ($keyword) {
+                    $q->where("name", "LIKE", "%$keyword%");
+                })
+                ->orWhereHas("company", function($q) use($keyword) {
+                    $q->where("name", "LIKE", "%$keyword%");
+                })
+                ->orWhereHas("eventDetail", function($q) use($keyword) {
+                    $q->where("title", "LIKE", "%$keyword%");
+                });
+        }
+
+        $events = $events->paginate(6);
         return view('frontend.pages.events' , compact('events'));
     }
 

@@ -11,12 +11,14 @@
         </div>
 
         <div class="row gy-5">
-            <div class="input-group mb-5">
-                <input type="text" class="form-control text-center" placeholder="Cari Seminar (Kota, Seminar Offline / Online, Judul, Kategori)">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" style="background-color:#0ea2bd; color:white"><i class="fas fa-search"></i></button>
+            <form action="{{ url("/events") }}" method="GET">
+                <div class="input-group mb-5">
+                    <input type="text" class="form-control text-center" name="q" placeholder="Cari Seminar (Kota, Seminar Offline / Online, Judul, Kategori)">
+                    <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" style="background-color:#0ea2bd; color:white"><i class="fas fa-search"></i></button>
+                    </div>
                 </div>
-            </div>
+            </form>
             {{-- <div class="col-md-12">
                 <div class="form-outline mb-4">
                     <input type="search" class="form-control text-center" id="datatable-search-input" >
