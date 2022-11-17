@@ -95,7 +95,7 @@ class EventRepository {
                 ]); 
             }
 
-            if(!is_null($events->eventListLabels)) {
+            if(!is_null($events->eventLabelLists)) {
                 $events->eventLabelLists()->delete();
             }
                 $events->eventLabelLists()->createMany($labels->toArray());

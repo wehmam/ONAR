@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Event;
+use App\Models\EventLabel;
 use App\Repository\EventRepository;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,8 @@ class EventController extends Controller
     public function create()
     {
         $companies = Company::get();
-        return view("backend.pages.schedules.form", compact("companies"));
+        $labels    = EventLabel::get();
+        return view("backend.pages.schedules.form", compact("companies", "labels"));
     }
 
     /**
@@ -95,7 +97,8 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         $companies = Company::get();
-        return view("backend.pages.schedules.form", compact('event', 'companies'));
+        $labels    = EventLabel::get();
+        return view("backend.pages.schedules.form", compact('event', 'companies', 'labels'));
     }
 
     /**
@@ -124,7 +127,6 @@ class EventController extends Controller
             "event_link" => "required_if:event_type,==,online",
             "event_label"   => "required|array"
         ]);
-
 
         if($validator->fails()) {
             alertNotify(false, collect($validator->messages()->first())->implode(", "));

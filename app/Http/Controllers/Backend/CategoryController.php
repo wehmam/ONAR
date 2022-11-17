@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Company;
-use App\Repository\CompanyRepository;
+use App\Models\EventLabel;
+use App\Models\EventLabelList;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
-class CompanyController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return view("backend.pages.company.index");
+        return view("backend.pages.category.index");
     }
 
     /**
@@ -26,7 +27,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view("backend.pages.company.form");
+        return view("backend.pages.category.form");
     }
 
     /**
@@ -38,12 +39,9 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            "name"  => "required|unique:companies",
-            "description"   => "required",
-            "address"       => "required",
-            "phone_number"  => "required",
-            "upload_image"  => "required"
+            "name"  => "required|unique:event_labels"
         ]);
+
 
         if($validator->fails()) {
             alertNotify(false, collect($validator->messages()->first())->implode(", "));
@@ -52,15 +50,12 @@ class CompanyController extends Controller
                 ->withErrors($validator);
         }
 
-        $response = (new CompanyRepository())->createOrUpdateCompany($request->all());
-        alertNotify($response["status"], $response["data"]);
+        $category = new EventLabel();
+        $category->name = $request->name;
+        $category->save();
 
-        if(!$response["status"]) {
-            return redirect()->back()
-                ->withInput();
-        }
-
-        return redirect(url("/backend/companies"));
+        alertNotify(true, "Category success to save!");
+        return redirect(url("/backend/categories"));
     }
 
     /**
@@ -80,9 +75,9 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company)
+    public function edit(EventLabel $category)
     {
-        return view("backend.pages.company.form", compact("company"));
+        return view("backend.pages.category.form", compact('category'));
     }
 
     /**
@@ -92,14 +87,15 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company)
+    public function update(Request $request, EventLabel $category)
     {
         $validator = \Validator::make($request->all(), [
-            "name"  => "required|unique:companies",
-            "description"   => "required",
-            "address"       => "required",
-            "phone_number"  => "required",
+            "name"  => [
+                "required",
+                Rule::unique('event_labels')->ignore($category->id)
+            ]
         ]);
+
 
         if($validator->fails()) {
             alertNotify(false, collect($validator->messages()->first())->implode(", "));
@@ -108,14 +104,11 @@ class CompanyController extends Controller
                 ->withErrors($validator);
         }
 
-        $response = (new CompanyRepository())->createOrUpdateCompany($request->all(), $company->id);
-        alertNotify($response["status"], $response["data"]);
+        $category->name = $request->name;
+        $category->save();
 
-        if(!$response["status"]) {
-            return redirect()->back()
-                ->withInput();            
-        }
-        return redirect(url("/backend/companies"));
+        alertNotify(true, "Success to update event category!");
+        return redirect(url("backend/categories"));
     }
 
     /**
@@ -129,27 +122,27 @@ class CompanyController extends Controller
         //
     }
 
+
     /**
-     * Get Data Company for datatables.
+     * Get Data Event for datatables.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function companyAjaxData(Request $request) {
-        $companies = Company::paginate(25);
+    public function labelsAjaxData(Request $request) {
+        $labels = EventLabel::paginate(10);
         $arrayData = collect([]);
 
-        $companies->each(function($q) use($arrayData) {
+        $labels->each(function($q) use($arrayData) {
             $arrayData->push([
-                $q->name,
-                $q->events->count() ?? 0,
-                '<a href="'.url('/backend/companies/' . $q->id . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>'
+                $q->name ?? "",
+                '<a href="'.url('/backend/categories/' . $q['id'] . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>'
             ]);
         });
         return response()->json([
             "draw"              => $request->get("draw"),
-            "recordsTotal"      => $companies->total(),
-            "recordsFiltered"   => $companies->total(),
+            "recordsTotal"      => $labels->total(),
+            "recordsFiltered"   => $labels->total(),
             "data"              => $arrayData->toArray()
         ]);
     }

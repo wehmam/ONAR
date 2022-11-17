@@ -125,9 +125,14 @@
                         <div class="form-group col-md-6">
                             <label for="event_label">Label Event</label>
                             <select name="event_label[]" id="event_label" class="form-control" multiple="multiple" required>
-                                <option value="Teknologi">Teknologi</option>
-                                <option value="Sains">Sains</option>
-                                <option value="Health">Health</option>
+                                @foreach ($labels as $label)
+                                    <option value="{{ $label->name }}" 
+                                        @foreach ($event->eventLabelLists as $evetLabel) 
+                                            {{ $evetLabel->name == $label->name ? "selected" : "" }}
+                                        @endforeach>
+                                        {{ $label->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -139,7 +144,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="event_link">Event Link</label>
-                            <input type="text" name="event_link" value="{{ isset($schedule) ? $schedule->event_link : "" }}" class="form-control" id="event_link">
+                            <input type="text" name="event_link" value="{{ isset($event) ? $event->eventDetail->link_event : "" }}" class="form-control" id="event_link">
                         </div>
                     </div>
 

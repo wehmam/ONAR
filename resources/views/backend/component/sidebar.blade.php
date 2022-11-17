@@ -27,17 +27,23 @@
         Data
     </div>
 
+    <li class="nav-item {{ Request::segment(2) == "companies" ? "active" : ""  }}">
+        <a class="nav-link" href="{{ url("/backend/companies") }}">
+            <i class="fa fa-shopping-basket"></i>
+            <span>List Company</span></a>
+    </li>
+
+    <li class="nav-item {{ Request::segment(2) == "categories" ? "active" : ""  }}">
+        <a class="nav-link" href="{{ url("/backend/categories") }}">
+            <i class="fa fa-shopping-basket"></i>
+            <span>Event Category</span></a>
+    </li>
+
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item {{ Request::segment(2) == "category" ? "active" : ""  }}">
         <a class="nav-link" href="{{ url("/backend/events") }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Events</span></a>
-    </li>
-
-    <li class="nav-item {{ Request::segment(2) == "companies" ? "active" : ""  }}">
-        <a class="nav-link" href="{{ url("/backend/companies") }}">
-            <i class="fa fa-shopping-basket"></i>
-            <span>Company</span></a>
     </li>
 
     <li class="nav-item {{ Request::segment(2) == "product" ? "active" : ""  }}">
