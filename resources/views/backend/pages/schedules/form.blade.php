@@ -126,12 +126,16 @@
                             <label for="event_label">Label Event</label>
                             <select name="event_label[]" id="event_label" class="form-control" multiple="multiple" required>
                                 @foreach ($labels as $label)
-                                    <option value="{{ $label->name }}" 
-                                        @foreach ($event->eventLabelLists as $evetLabel) 
-                                            {{ $evetLabel->name == $label->name ? "selected" : "" }}
-                                        @endforeach>
+                                    @if($event->eventLabelLists)
+                                        <option value="{{ $label->name }}"
+                                            @foreach ($event->eventLabelLists as $evetLabel)
+                                                {{ $evetLabel->name == $label->name ? "selected" : "" }}
+                                            @endforeach>
                                         {{ $label->name }}
-                                    </option>
+                                        </option>
+                                    @else
+                                        <option value="{{ $label->name }}">{{ $label->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
