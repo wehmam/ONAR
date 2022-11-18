@@ -126,12 +126,12 @@
                             <label for="event_label">Label Event</label>
                             <select name="event_label[]" id="event_label" class="form-control" multiple="multiple" required>
                                 @foreach ($labels as $label)
-                                    @if($event->eventLabelLists)
+                                    @if(isset($event))
                                         <option value="{{ $label->name }}"
                                             @foreach ($event->eventLabelLists as $evetLabel)
                                                 {{ $evetLabel->name == $label->name ? "selected" : "" }}
                                             @endforeach>
-                                        {{ $label->name }}
+                                            {{ $label->name }}
                                         </option>
                                     @else
                                         <option value="{{ $label->name }}">{{ $label->name }}</option>
