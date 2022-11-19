@@ -38,7 +38,7 @@
 
         if(sessionStatus) {
             Swal.fire(
-                sessionClass == "danger" ? "Opps!" : "Success!" ,
+                sessionClass == "error" ? "Opps!" : "Success!" ,
                 sessionMessage,
                 sessionClass
             )

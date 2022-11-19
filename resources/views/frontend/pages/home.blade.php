@@ -35,7 +35,7 @@
                         <div class="icon">
                         <i class="bi bi-activity"></i>
                         </div>
-                        <a href="{{ url('/events/' . $event->id) }}" target="_blank" class="stretched-link">
+                        <a href="{{ url('/events/' . $event->event_slug) }}" target="_blank" class="stretched-link">
                         <h3>{{ $event->eventDetail->title }}</h3>
                         </a>
                         <p>{{ Str::limit($event->eventDetail->description), 20 , '...' }}</p>

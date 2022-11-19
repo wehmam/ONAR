@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Models\Event;
 use App\Models\EventDetail;
+use App\Models\Registration;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,36 +26,36 @@ class EventRepository {
             $events->company_id = $params["company_id"];
             $events->event_type = $params["event_type"];
             $events->has_active = $params["has_active"];
-            
-            if(!$findEvent) {
-                $lastEvent = Event::whereNotNull('event_number')
-                    ->orderBy('id', 'DESC')
-                    ->take(1)
-                    ->first('event_number');
+            $events->event_slug = self::createSlug($params["title"]);
+            // if(!$findEvent) {
+                // $lastEvent = Event::whereNotNull('event_number')
+                //     ->orderBy('id', 'DESC')
+                //     ->take(1)
+                //     ->first('event_number');
 
-                if(!$lastEvent) {
-                    $eventNumber = 'ONR' . date('ymd') . '0001';
-                } else {
-                    $explode = explode('ONR', $lastEvent->event_number);
+                // if(!$lastEvent) {
+                //     $eventNumber = 'ONR' . date('ymd') . '0001';
+                // } else {
+                //     $explode = explode('ONR', $lastEvent->event_number);
 
-                    if (strlen($explode[1]) > 10) {
-                        $date = date('Ymd');
-                        $day = substr($explode[1], 0, 8);
-                        $num = substr($explode[1], -3);
-                    } else {
-                        $date = date('ymd');
-                        $day = substr($explode[1], 0, 6);
-                        $num = substr($explode[1], -4);
-                    }
+                //     if (strlen($explode[1]) > 10) {
+                //         $date = date('Ymd');
+                //         $day = substr($explode[1], 0, 8);
+                //         $num = substr($explode[1], -3);
+                //     } else {
+                //         $date = date('ymd');
+                //         $day = substr($explode[1], 0, 6);
+                //         $num = substr($explode[1], -4);
+                //     }
 
-                    if($day == $date) {
-                        $eventNumber = 'ONR' . date('ymd') . sprintf('%04d', (int) $num + 1);
-                    } else {
-                        $eventNumber = 'ONR' . date('ymd') . sprintf('%04d', 1);
-                    }
-                }
-                $events->event_number = $eventNumber;
-            }            
+                //     if($day == $date) {
+                //         $eventNumber = 'ONR' . date('ymd') . sprintf('%04d', (int) $num + 1);
+                //     } else {
+                //         $eventNumber = 'ONR' . date('ymd') . sprintf('%04d', 1);
+                //     }
+                // }
+                // $events->event_number = $eventNumber;
+            // }            
             $events->save();
 
             $findEventDetail = EventDetail::where("event_id", $events->id)
@@ -107,5 +109,66 @@ class EventRepository {
             DB::rollBack();
             return responseCustom($e->getMessage(), false);
         }
+    }
+
+    public function registerEvent($params) {
+        try {
+            $user  = Auth::user();
+            $event = Event::where("event_slug", $params["event_slug"])
+                ->first();
+
+            $findRegistration = Registration::where([
+                ["user_id", $user->id],
+                ["event_id", $event->id]
+            ])->first();
+            
+            if($findRegistration) {
+                return responseCustom($findRegistration->invoice , true);
+            }
+
+            $register = new Registration();
+            $register->user_id  = $user->id;
+            $register->event_id = $event->id;
+
+            $lastEvent = Registration::whereNotNull('invoice')
+                ->orderBy('id', 'DESC')
+                ->take(1)
+                ->first('invoice');
+
+            if(!$lastEvent) {
+                $eventNumber = 'ONR' . date('ymd') . '0001';
+            } else {
+                $explode = explode('ONR', $lastEvent->invoice);
+
+                if (strlen($explode[1]) > 10) {
+                    $date = date('Ymd');
+                    $day = substr($explode[1], 0, 8);
+                    $num = substr($explode[1], -3);
+                } else {
+                    $date = date('ymd');
+                    $day = substr($explode[1], 0, 6);
+                    $num = substr($explode[1], -4);
+                }
+
+                if($day == $date) {
+                    $eventNumber = 'ONR' . date('ymd') . sprintf('%04d', (int) $num + 1);
+                } else {
+                    $eventNumber = 'ONR' . date('ymd') . sprintf('%04d', 1);
+                }
+            }
+
+            $register->invoice      = $eventNumber;
+            $register->total_price  = $event->eventDetail->price;
+            $register->save();
+
+            return responseCustom($register->invoice, true);
+        } catch (\Exception $e) {
+            return responseCustom("Something Wrong!", false);
+        }
+    }
+
+    public static function createSlug($str, $delimiter = "-") {
+        $slug = strtolower(trim(preg_replace('/[\s-]+/', $delimiter, preg_replace('/[^A-Za-z0-9-]+/', $delimiter, preg_replace('/[&]/', 'and', preg_replace('/[\']/', '', iconv('UTF-8', 'ASCII//TRANSLIT', $str))))), $delimiter));
+        return $slug;
     }
 }

@@ -6,13 +6,13 @@
     <div class="container" data-aos="fade-up">
 
         <div class="section-header mt-5">
-        <h2>Payments</h2>
+        <h2>Payments {{ $registration->invoice }}</h2>
         </div>
 
         <div class="row gy-5" id="events-data">
                 <div class="col-xl-5 col-md-6">
                     <div class="img">
-                        <img src="http://127.0.0.1:8000/storage/images/schedules/6EzdSUbe2qCp2hbIqvjyrS9caBz8eBgEjpWeBFwJ.jpg" class="img-fluid" alt="">
+                        <img src="/storage/images/schedules/0dsUzr06euADkbFsOn7hxX7bKbBHkiFUsIKGESaF.jpg" class="img-fluid" alt="">
                     </div>
                 </div>
                 <div class="col-xl-5 col-md-6">
@@ -24,28 +24,45 @@
                                         <tr>
                                             <td width="150">Invoice</td>
                                             <td width="20">:</td>
-                                            <td>ONR12345</td>
+                                            <td>{{ $registration->invoice }}</td>
                                         </tr>
                                         <tr>
                                             <td width="150">Seminar City</td>
                                             <td width="20">:</td>
-                                            <td>DKI Jakarta</td>
+                                            <td>{{ $registration->event->eventDetail->event_location }}</td>
                                         </tr>
                                         <tr>
                                             <td width="150">Name</td>
                                             <td width="20">:</td>
-                                            <td>Imam Maulana Ashari</td>
+                                            <td>{{ ucwords($registration->user->name) ?? "" }}</td>
                                         </tr>
                                         <tr>
                                             <td>Email</td>
                                             <td>:</td>
-                                            <td>imam@fintegra.co.id</td>
+                                            <td>{{ $registration->user->email ?? "" }}</td>
                                         </tr>
-        
+                                        
+                                        @php
+                                            $date = \Carbon\Carbon::parse($registration->event->eventDetail->event_date)->locale('id');
+                                            $date->settings(['formatFunction' => 'translatedFormat']);
+                                            $startHour =\Carbon\Carbon::parse($registration->event->eventDetail->start_hour)
+                                                ->locale('id')
+                                                ->settings(['formatFunction'    => 'translatedFormat']);
+
+                                            $endHour =\Carbon\Carbon::parse($registration->event->eventDetail->end_hour)
+                                                ->locale('id')
+                                                ->settings(['formatFunction'    => 'translatedFormat']);
+
+                                        @endphp
                                         <tr>
                                             <td>Date</td>
                                             <td>:</td>
-                                            <td>2022-07-20</td>
+                                            <td>{{ $date->format('l, j F Y') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Time</td>
+                                            <td>:</td>
+                                            <td>{{ $startHour->format('H:i') }} - {{ $endHour->format('H:i') }}</td>
                                         </tr>
                                         <tr>
                                             <td>Total</td>
@@ -55,7 +72,7 @@
                                         <tr>
                                             <td>Payment Status</td>
                                             <td>:</td>
-                                            <td>Un Paid</td>
+                                            <td>Unpaid</td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [IndexController::class, 'eventList']);
         Route::get('/{id}', [IndexController::class, 'eventDetail']);
         Route::get('/pay/{invoice?}', [IndexController::class, 'paymentEvents']);
+        Route::post('/register', [IndexController::class, 'registEvent']);
     });
 
     Route::post('/logout', [FrontendAuthLoginController::class, "logout"]);

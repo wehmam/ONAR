@@ -81,11 +81,15 @@
                         <p><em>{{ $event->eventDetail->description }}</em></p>
                     </div>
                 </div>
-                <div class="row mt-5">
-                    <div class="col-md-6 offset-md-6">
-                        <button class="btn btn-md btn-primary" style="background-color:#0ea2bd; color:white">Daftar</button>
+                <form action="{{ url("events/register") }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="event_slug" value="{{ $event->event_slug }}">
+                    <div class="row mt-5">
+                        <div class="col-md-6 offset-md-6">
+                            <button class="btn btn-md btn-primary" style="background-color:#0ea2bd; color:white">Daftar</button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -95,5 +99,5 @@
 
 @endsection
 @section('external-js')
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 @endsection

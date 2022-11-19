@@ -4,13 +4,18 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Registration;
 use App\Models\Schedule;
+use App\Repository\EventRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
     public function home() {
-        $events = Event::take(6)->inRandomOrder()->get();
+        $events = Event::take(6)
+            ->inRandomOrder()
+            ->get();
         return view('frontend.pages.home', compact('events'));
     }
 
@@ -43,12 +48,57 @@ class IndexController extends Controller
         return response()->json($events);
     }
 
-    public function eventDetail($id) {
-        $event = Event::findOrFail($id);
+    public function eventDetail($slug) {
+        $event = Event::where("event_slug", $slug)
+            ->first();
+        if(!$event) {
+            alertNotify(false, "Event not exist!");
+            return redirect(url("events"));
+        }
+
         return view('frontend.pages.events-detail', compact('event'));
     }
 
-    public function paymentEvents(Request $request) {
-        return view('frontend.pages.payments');
+    public function registEvent(Request $request) {
+        $event = Event::where("event_slug", $request->get("event_slug")) 
+            ->first();
+
+        if(!$event) {
+            alertNotify(false, "The event is no exist!");
+            return redirect()
+                ->back()
+                ->withInput();
+        }
+
+        if(!$event->has_active) {
+            alertNotify(false, "This event is not active anymore");
+            return redirect()
+                ->back()
+                ->withInput();
+        }
+        
+        $register = (new EventRepository())->registerEvent($request->all());
+        if(!$register["status"]) {
+            alertNotify($register["status"], $register["data"]);
+            return redirect()->back();
+        }
+
+        return redirect(url("events/pay/" . $register["data"]));
+    }
+
+    public function paymentEvents($invoice) {
+        $registration = Registration::where("invoice", $invoice)
+            ->first();
+
+        if(!$registration) {
+            alertNotify(false, "Your Invoice doesn't exists , Please register another events!");
+            return redirect(url("events"));
+        }
+
+        if($registration->user_id != Auth::user()->id) {
+            alertNotify(false, "Your Invoice doesn't exists , Please register another events!");
+            return redirect(url("events"));
+        }
+        return view('frontend.pages.payments', compact("registration"));
     }
 }

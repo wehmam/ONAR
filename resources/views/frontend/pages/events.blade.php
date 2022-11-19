@@ -37,7 +37,7 @@
                         <div class="icon">
                         <i class="bi bi-activity"></i>
                         </div>
-                        <a href="{{ url('events/' . $event->id) }}" target="_blank" class="stretched-link">
+                        <a href="{{ url('events/' . $event->event_slug) }}" target="_blank" class="stretched-link">
                         <h3>{{ $event->eventDetail->title }}</h3>
                         <h4>{{ $event->eventDetail->price > 0 ?  "Rp . " . number_format($event->eventDetail->price) : "Free" }}</h5>
                         </a>

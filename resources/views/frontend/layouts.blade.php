@@ -75,32 +75,44 @@
     <script src="{{ asset("assets/frontend/js/main.js") }}"></script>
     @yield('external-js')
     <script>
-      function logout() {
-          Swal.fire({
-              title: 'Are you sure?',
-              text: "You won't Logout!",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Logout!'
-              }).then((result) => {
-              if (result.isConfirmed) {
-                  fetch('{{ url("/logout") }}', {
-                      headers: {
-                          'content-type'      : 'application/json',
-                          'Accept'            : 'application/json',
-                          'X-Requested-With'  : 'XMLHttpRequest',
-                          'X-CSRF-Token'      : '{{ csrf_token() }}'
-                      },
-                      method: 'POST',
-                  })
-                  .then(res => {
-                      window.location.reload()
-                  })
-              }
-          })
-      }
+        const sessionStatus  = "{{ Session::has('status') }}"
+        const sessionMessage = "{{ Session::get('status') }}"
+        const sessionClass   = "{{ Session::get('alert-class') }}"
+
+        if(sessionStatus) {
+            Swal.fire(
+                sessionClass == "error" ? "Opps!" : "Success!" ,
+                sessionMessage,
+                sessionClass
+            )
+            "{{ Session::forget('status') }}"
+        }
+        function logout() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't Logout!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Logout!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('{{ url("/logout") }}', {
+                        headers: {
+                            'content-type'      : 'application/json',
+                            'Accept'            : 'application/json',
+                            'X-Requested-With'  : 'XMLHttpRequest',
+                            'X-CSRF-Token'      : '{{ csrf_token() }}'
+                        },
+                        method: 'POST',
+                    })
+                    .then(res => {
+                        window.location.reload()
+                    })
+                }
+            })
+        }
     </script>
 </body>
 
