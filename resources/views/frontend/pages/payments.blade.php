@@ -12,7 +12,7 @@
         <div class="row gy-5" id="events-data">
                 <div class="col-xl-5 col-md-6">
                     <div class="img">
-                        <img src="/storage/images/schedules/0dsUzr06euADkbFsOn7hxX7bKbBHkiFUsIKGESaF.jpg" class="img-fluid" alt="">
+                        <img src="{{ Storage::url($registration->event->eventDetail->banner) }}" class="img-fluid" alt="">
                     </div>
                 </div>
                 <div class="col-xl-5 col-md-6">
