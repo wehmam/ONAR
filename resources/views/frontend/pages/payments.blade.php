@@ -29,7 +29,7 @@
                                         <tr>
                                             <td width="150">Seminar City</td>
                                             <td width="20">:</td>
-                                            <td>{{ $registration->event->eventDetail->event_location }}</td>
+                                            <td>{{ strtoupper($registration->event->eventDetail->event_location) }}</td>
                                         </tr>
                                         <tr>
                                             <td width="150">Name</td>
@@ -67,18 +67,18 @@
                                         <tr>
                                             <td>Total</td>
                                             <td>:</td>
-                                            <td class="red">Rp. 100.000,00</td>
+                                            <td class="red">Rp. {{ number_format($registration->event->eventDetail->price) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Payment Status</td>
                                             <td>:</td>
-                                            <td>Unpaid</td>
+                                            <td>{{ $registration->status_paid == "PENDING" ? "Unpaid" : "Paid " }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <div class="col-md-12 text-center mt-5">
                                     <button class="btn btn-md btn-primary">Gopay</button>
-                                    <button class="btn btn-md btn-warning">Bank Online</button>
+                                    <button class="btn btn-md btn-warning btn-pay">Bank Online</button>
                                 </div>
                             </div>
                        </div>
@@ -94,4 +94,7 @@
 @endsection
 @section('external-js')
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+{{-- <script type="text/javascript" src="https://app.midtrans.com/snap/snap.js" data-client-key="Mid-client-vX1uJJLZxlUy_3mn"></script> --}}
+<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-iR3m11J8EDBriIte"></script>
+<script src="{{ asset("assets/frontend/js/do.js?v=1.0") }}"></script>
 @endsection

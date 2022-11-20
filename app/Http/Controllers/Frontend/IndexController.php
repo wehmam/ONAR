@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\Registration;
 use App\Models\Schedule;
 use App\Repository\EventRepository;
+use App\Repository\PaymentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -100,5 +101,24 @@ class IndexController extends Controller
             return redirect(url("events"));
         }
         return view('frontend.pages.payments', compact("registration"));
+    }
+
+    public function doToken(Request $request) {
+        $requestToken = (new PaymentRepository())->requestSnapToken($request->all());
+        if(!$requestToken["status"]) {
+            return response()->json([
+                "status"    => false,
+                "data"      => $requestToken["data"]
+            ]);
+        }        
+
+        return response()->json([
+            "status"    => true,
+            "data"      => $requestToken["data"]
+        ]);
+    }
+
+    public function doPayment() {
+
     }
 }

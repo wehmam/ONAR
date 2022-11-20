@@ -8,6 +8,7 @@
 <title>@yield("title", "ONAR.")</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="_token" content="{{ csrf_token() }}">
 
   <!-- Favicons -->
   <link href="{{ asset("assets/frontend/img/favicon.png") }}" rel="icon">
