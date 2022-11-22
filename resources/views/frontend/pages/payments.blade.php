@@ -167,5 +167,5 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 {{-- <script type="text/javascript" src="https://app.midtrans.com/snap/snap.js" data-client-key="Mid-client-vX1uJJLZxlUy_3mn"></script> --}}
 <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-iR3m11J8EDBriIte"></script>
-<script src="{{ asset("assets/frontend/js/do.js?v=1.1") }}"></script>
+<script src="{{ asset("assets/frontend/js/do.js?v=1.2") }}"></script>
 @endsection
