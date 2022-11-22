@@ -9,6 +9,9 @@ class Registration extends Model
 {
     use HasFactory;
 
+    protected $fillable = ["status_paid", "paid_at"];
+
+
     public function event() {
         return $this->belongsTo(Event::class);
     }

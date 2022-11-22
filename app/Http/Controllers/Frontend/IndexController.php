@@ -118,7 +118,8 @@ class IndexController extends Controller
         ]);
     }
 
-    public function doPayment() {
-
+    public function paymentCallback(Request $request) {
+        $callback = (new PaymentRepository())->paymentCallback($request);
+        return response()->json($callback);
     }
 }
