@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post("callback", [IndexController::class , 'paymentCallback']);
+Route::post('/payment-save-info/{invoice?}', [IndexController::class, 'doPayment']);

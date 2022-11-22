@@ -70,7 +70,8 @@ class PaymentRepository {
 
                 $paymentLog->registration->update([
                     "status_paid"   => "PAID",
-                    "paid_at"       => now()
+                    "paid_at"       => now(),
+                    "dump_payment"  => json_encode($request->all())
                 ]);
             }
 

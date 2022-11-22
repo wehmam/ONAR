@@ -19,17 +19,18 @@ function getSnapToken(callback) {
 
 
 $('.btn-pay').on('click', function(){
+    $(this).prop('disabled', true);
     getSnapToken(function(response){
         var result = JSON.parse(response)
+        $(this).prop('disabled', false);
         snap.pay(result.data, {
             onSuccess: function(result){
                 location.reload()
             },
             onPending: function(result){
-                console.log(result)
-                // $.post('/payment-save-info/'+invoice, {data:result}, function(status){
+                $.post('/api/payment-save-info/'+ id, {data:result}, function(status){
                     location.reload()
-                // })
+                })
             },
             onError: function(result){
                 console.log(result)

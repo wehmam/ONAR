@@ -1,4 +1,15 @@
 @extends("frontend.layouts")
+@section('external-css')
+    <style>
+        .badge {
+            background-color: rgb(0, 225, 255);
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 5px;
+        }
+    </style>
+@endsection
 @section('content')
 
 <!-- ======= Services Section ======= -->
@@ -11,8 +22,61 @@
 
         <div class="row gy-5" id="events-data">
                 <div class="col-xl-5 col-md-6">
-                    <div class="img">
-                        <img src="{{ Storage::url($registration->event->eventDetail->banner) }}" class="img-fluid" alt="">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="img">
+                                <img src="{{ Storage::url($registration->event->eventDetail->banner) }}" class="img-fluid" alt="">
+                            </div>
+                        </div>
+                        @if(!is_null($registration->dump_payment) && is_null($registration->paid_at))
+                            @php
+                                $dump = generateArrMidtrans($registration->dump_payment);
+                            @endphp
+                            <div class="col-md-12">
+                                <p class="card-desc mt-5" style="text-align:center">Silahkan transfer ke nomor rekening dibawah ini :</p>
+                                <div class="card col-md-12 mb-3">
+                                    <div class="table-responsive mt-5 p-5">
+                                        <table class="table table-hover">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Bank</th>
+                                                    <td style="text-transform: capitalize;">{{ mb_strtoupper($dump['flag']) }}</td>
+                                                </tr>
+                                                @if (isset($dump['kode_perusahaan']) && $dump['kode_perusahaan'] !== '')
+                                                    <tr>
+                                                        <th>Kode Perusahaan</th>
+                                                        <td>{{ $dump['kode_perusahaan'] }}</td>
+                                                    <tr>
+                                                    <tr>
+                                                        <th>Kode Pembayaran</th>
+                                                        <td>{{ $dump['account_number'] }}</td>
+                                                    <tr>
+                                                @else
+                                                    <tr>
+                                                        <th>Rekening</th>
+                                                        <td>{{ $dump['account_number'] }}</td>
+                                                    </tr>
+                                                @endif
+                                                @if ($registration->dump_payment != '')
+                                                    <tr>
+                                                        <th>Tagihan</th>
+                                                        <th>Rp {{ number_format($registration->total_price, 2) }}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Biaya Transfer</th>
+                                                        <th>Rp {{ number_format(($dump['gross_amount'] - $registration->total_price), 2) }}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Total Pembayaran</th>
+                                                        <th>Rp {{ number_format(($dump["gross_amount"]) ,2) }}</th>
+                                                    </tr>
+                                                @endif
+                                                </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-xl-5 col-md-6">
@@ -67,18 +131,25 @@
                                         <tr>
                                             <td>Total</td>
                                             <td>:</td>
-                                            <td class="red">Rp. {{ number_format($registration->event->eventDetail->price) }}</td>
+                                            <td class="red">Rp. {{ number_format($registration->event->eventDetail->price + 4400) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Payment Status</td>
                                             <td>:</td>
-                                            <td>{{ $registration->status_paid == "PENDING" ? "Unpaid" : "Paid " }}</td>
+                                            <td>
+                                                <h3 class="badge">{{ !is_null($registration->dump_payment) && is_null($registration->paid_at) ? "PENDING" : (!is_null($registration->paid_at) ? "Paid" : "Unpaid" ) }}</h3>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <div class="col-md-12 text-center mt-5">
-                                    <button class="btn btn-md btn-primary">Gopay</button>
-                                    <button class="btn btn-md btn-warning btn-pay">Bank Online</button>
+                                    @if(is_null($registration->paid_at))
+                                        @if($registration->dump_payment)
+                                            <button class="btn btn-md btn-warning btn-pay">Change Payment</button>
+                                        @else 
+                                            <button class="btn btn-md btn-warning btn-pay">Bank Online</button>
+                                        @endif
+                                    @endif
                                 </div>
                             </div>
                        </div>

@@ -40,7 +40,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/register', [IndexController::class, 'registEvent']);
 
         Route::post('do-token', [IndexController::class, 'doToken']);
-        Route::post('/payment', [IndexController::class, 'doPayment']);
     });
 
     Route::post('/logout', [FrontendAuthLoginController::class, "logout"]);

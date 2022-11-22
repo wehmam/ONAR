@@ -118,6 +118,21 @@ class IndexController extends Controller
         ]);
     }
 
+    public function doPayment($invoice , Request $request) {
+        $registration = Registration::where("invoice", $invoice) 
+            ->first();
+        
+        if($registration) {
+            $registration->dump_payment = json_encode($request->all());
+            $registration->save();
+        }
+
+        return response()->json([
+            "status"    => $registration ? true : false,
+            "data"      => []
+        ]);
+    }
+
     public function paymentCallback(Request $request) {
         $callback = (new PaymentRepository())->paymentCallback($request);
         return response()->json($callback);
