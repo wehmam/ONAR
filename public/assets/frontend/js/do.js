@@ -29,7 +29,7 @@ $('.btn-pay').on('click', function(){
             },
             onPending: function(result){
                 $.post('/api/payment-save-info/'+ id, {data:result}, function(status){
-                    // location.reload()
+                    location.reload()
                 })
             },
             onError: function(result){
