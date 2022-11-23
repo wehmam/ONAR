@@ -143,7 +143,29 @@
         </div>
       </section><!-- End Testimonials Section -->
 
+
       <!-- ======= Team Section ======= -->
+      <section id="creator" class="team">
+        <div class="container" data-aos="fade-up">
+
+          <div class="section-header mb-5">
+            <h2>Want To Be Creator</h2>
+            <p>You can publish your events in ONAR, come on register and publish you events</p>
+          </div>
+
+          <div class="row gy-5">
+                <div class="col-xl-12 text-center mt-5 mb-3 d-flex" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="{{ asset("assets/frontend/img/regist-creator.svg") }}" alt="">
+                </div>
+                <div class="col-xl-6 offset-xl-6 col-md-6 offset-md-6">
+                    <a href="{{ url('/creator') }}" class="btn btn-md" style="background-color:#0ea2bd; color:white">Create Events</a>
+                </div>
+          </div>
+
+        </div>
+      </section><!-- End Creator Section -->
+
+      {{-- <!-- ======= Team Section ======= -->
       <section id="team" class="team">
         <div class="container" data-aos="fade-up">
 
@@ -154,7 +176,7 @@
 
           <div class="row gy-5">
 
-            <div class="col-xl-4 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="200">
+            <div class="col-xl-6 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="200">
               <div class="team-member">
                 <div class="member-img">
                   <img src="{{ asset("assets/frontend/img/team/team-1.jpg") }}" class="img-fluid" alt="">
@@ -172,7 +194,7 @@
               </div>
             </div><!-- End Team Member -->
 
-            <div class="col-xl-4 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="400">
+            <div class="col-xl-6 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="400">
               <div class="team-member">
                 <div class="member-img">
                   <img src="{{ asset("assets/frontend/img/team/team-2.jpg") }}" class="img-fluid" alt="">
@@ -190,28 +212,10 @@
               </div>
             </div><!-- End Team Member -->
 
-            <div class="col-xl-4 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="600">
-              <div class="team-member">
-                <div class="member-img">
-                  <img src="{{ asset("assets/frontend/img/team/team-3.jpg") }}" class="img-fluid" alt="">
-                </div>
-                <div class="member-info">
-                  <div class="social">
-                    <a href=""><i class="bi bi-twitter"></i></a>
-                    <a href=""><i class="bi bi-facebook"></i></a>
-                    <a href=""><i class="bi bi-instagram"></i></a>
-                    <a href=""><i class="bi bi-linkedin"></i></a>
-                  </div>
-                  <h4>Gilang Ramadhan</h4>
-                  <span>System Analyst</span>
-                </div>
-              </div>
-            </div><!-- End Team Member -->
-
           </div>
 
         </div>
-      </section><!-- End Team Section -->
+      </section><!-- End Team Section --> --}}
 
 
       {{-- <!-- ======= Contact Section ======= -->

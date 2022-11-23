@@ -13,11 +13,11 @@
             <li><a class="nav-link scrollto" href="{{ url("/") }}">Home</a></li>
             <li><a class="nav-link scrollto" href="{{ url("/#services") }}">Events</a></li>
             <li><a class="nav-link scrollto" href="{{ url("/#testimonials") }}">Testimonials</a></li>
-            <li><a class="nav-link scrollto" href="{{ url("/#team") }}">Team</a></li>
+            <li><a class="nav-link scrollto" href="{{ url("/#creator") }}">Creator</a></li>
             @if(\Auth::check())
               <li><a href="{{ url('/profile') }}" class="nav-link scrollto {{ Request::segment(1) == "profile" ? "active" : "" }}">Profile</a></li>
               <li><a href="javascript:;" onclick="logout()">Logout </a></li>
-            @endif 
+            @endif
         </ul>
         <i class="bi bi-list mobile-nav-toggle d-none"></i>
       </nav><!-- .navbar -->

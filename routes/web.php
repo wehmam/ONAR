@@ -28,6 +28,7 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', [FrontendAuthLoginController::class, "loginPost"]);
     Route::get('/register', [FrontendAuthLoginController::class, "register"])->middleware("guest");
     Route::post('/register', [FrontendAuthLoginController::class, "registerNewMember"]);
+    Route::get('creator', [FrontendAuthLoginController::class, "registerCreator"]);
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -50,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
 Route::prefix('backend')->group(function () {
     Route::get("/login", [AuthLoginController::class, 'index']);
     // ->middleware('guestAdmin');
+    Route::post("/register", [AuthLoginController::class, "registerNewAdmin"]);
     Route::post("/login", [AuthLoginController::class, 'loginPost']);
     Route::middleware(['authAdmin'])->group(function() {
         Route::post("/logout", [AuthLoginController::class, 'logout']);

@@ -18,6 +18,10 @@ class AuthLoginController extends Controller
         return view("frontend.pages.registerv2");
     }
 
+    public function registerCreator() {
+        return view("frontend.pages.register-creator");
+    }
+
     public function registerNewMember(Request $request) {
         $validator = \Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],

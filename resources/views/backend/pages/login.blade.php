@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-<header> 
+<header>
     <a aria-label="Linkedin" class="z-10 mt-9 absolute md:ml-12 ml-9" href="/">
         {{-- <img src="https://importir.com/images/com-01.png" onclick="window.location.open(window.location.origin)" class="w-36" alt=""> --}}
     </a>
@@ -51,7 +51,7 @@
     <div class="bg-white md:shadow-lg shadow-none rounded p-6 w-96" >
         <h1 class="text-3xl font-bold leading-normal" >Sign in Admin</h1>
         <form class="space-y-10 mt-5" method="POST" action="{{ url("backend/login") }}">
-            @csrf 
+            @csrf
 
             <div class="mb-4 relative">
                 <span class="block text-sm font-medium text-slate-700 mb-3 leading-tighter text-gray-500 text-base">Email</span>
@@ -62,7 +62,7 @@
                 <div class="relative flex items-center border border-gray-500 focus:ring focus:border-blue-500 rounded">
                     <input id="password" class="w-full rounded px-3 pt-5 outline-none pb-2 focus:outline-none active:outline-none input active:border-blue-500 @error('email') border-red-500 @enderror" name="password" type="password"/>
                     <a id="labelShow" class="text-sm font-bold text-blue-700 hover:bg-gray-200 rounded-full px-2 py-1 mr-1 leading-normal cursor-pointer" onclick="changeType()">show</a>
-                </div>    
+                </div>
             </div>
             <div class="-m-2">
                 <a class="font-bold text-blue-700 hover:bg-gray-200 hover:underline hover:p-5 p-4 rounded-full" href="#" onclick="alert('Opps Incoming Feature!')">Forgot password?</a>
@@ -72,6 +72,8 @@
     </div>
     <p>Member Area<a class="text-blue-700 font-bold hover:bg-gray-200 hover:underline hover:p-5 p-2 rounded-full" href="{{ url("") }}">Home</a></p>
 </div>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function changeType() {
         const pass = document.querySelector("#password")
@@ -84,6 +86,18 @@
             document.querySelector("#pwdText").style.display = ""
             document.querySelector("#labelShow").textContent = "show"
         }
+    }
+
+    const sessionStatus = "{{ Session::has('status') }}"
+    const sessionMessage = "{{ Session::get('status') }}"
+    const sessionClass = "{{ Session::get('alert-class') }}"
+
+    if (sessionStatus) {
+        Swal.fire(
+            sessionClass == "error" ? "Opps!" : "Success!",
+            sessionMessage,
+            sessionClass
+        )
     }
 </script>
 </body>
