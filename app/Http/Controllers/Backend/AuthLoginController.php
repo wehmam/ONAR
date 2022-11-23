@@ -16,6 +16,9 @@ use Illuminate\Validation\Rules;
 class AuthLoginController extends Controller
 {
     public function index() {
+        if(\Sentinel::check()) {
+            return redirect(url("backend"));
+        }
         return view("backend.pages.login");
     }
 
@@ -33,7 +36,9 @@ class AuthLoginController extends Controller
     }
 
     public function logout(){
-        Sentinel::logout();
+        if(\Sentinel::check()) {
+            Sentinel::logout();
+        }
         return redirect(url('/backend'));
     }
 
@@ -56,7 +61,6 @@ class AuthLoginController extends Controller
             'email'      => $request->get("email"),
             'password'   => Hash::make($request->get("password")),
             'first_name' => $request->get("name"),
-            'last_name'  => "- Admin"
         ];
 
         DB::beginTransaction();
@@ -70,13 +74,13 @@ class AuthLoginController extends Controller
         $AdminUsers->email      = $credentials['email'];
         $AdminUsers->password   = $credentials["password"];
         $AdminUsers->first_name = $credentials['first_name'];
-        $AdminUsers->last_name  = $credentials['last_name'];
+        $AdminUsers->last_name  = "- " . $company->name;
         $AdminUsers->save();
 
         $activate               = new Activation();
         $activate->user_id      = $AdminUsers['id'];
         $activate->code         = md5(date("Y-m-d H:i:s"));
-        $activate->completed    = 0;
+        $activate->completed    = 1;
         // $activate->completed_at = date("Y-m-d H:i:s");
         $activate->save();
 
@@ -84,6 +88,6 @@ class AuthLoginController extends Controller
         DB::commit();
 
         alertNotify(true, "Berhasil Register sebagai creator, silakan login");
-        return redirect(url('backend'));
+        return redirect(url('backend/login'));
     }
 }

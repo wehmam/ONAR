@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("checkActivatedAdmin");
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -177,14 +182,16 @@ class EventController extends Controller
     public function eventsAjaxData(Request $request) {
         $schedules = Event::paginate(25);
         $arrayData = collect([]);
+        $admin     = \Sentinel::check();
 
-        $schedules->each(function($q) use($arrayData) {
+
+        $schedules->each(function($q) use($arrayData, $admin) {
             $arrayData->push([
                 $q->eventDetail->title ?? "",
                 $q->eventDetail->event_location ?? "",
                 $q["event_type"] == "online" ? "Online" : "Offline",
                 'Rp. '.number_format($q->eventDetail->price,0,'.','.') ?? "Free",
-                '<a href="'.url('/backend/events/' . $q['id'] . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>'
+                is_null($admin["company_id"]) ? '<a href="'.url('/backend/events/' . $q['id'] . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>' : ""
             ]);
         });
         return response()->json([

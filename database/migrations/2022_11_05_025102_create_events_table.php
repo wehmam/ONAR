@@ -16,10 +16,10 @@ class CreateEventsTable extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string("event_number")->default("");
-            // $table->unsignedInteger("event_category_id");
             $table->unsignedInteger("company_id");
             $table->string("event_type");
             $table->boolean("has_active");
+            $table->timestamp("publish_at")->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

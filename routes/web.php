@@ -57,18 +57,20 @@ Route::prefix('backend')->group(function () {
         Route::post("/logout", [AuthLoginController::class, 'logout']);
         Route::get("/", function() {
             return view("backend.pages.dashboard");
-        });
-        Route::resource('registrations', RegistrationController::class);
-        // Route::get('/schedules/ajax', [ScheduleController::class, "schedulesAjaxData"]);
-        Route::get('events/ajax', [EventController::class, "eventsAjaxData"]);
-        Route::resource('/schedules', ScheduleController::class);
-        Route::resource('events', EventController::class);
+        })->middleware("checkActivatedAdmin");
 
-        Route::get('companies/ajax', [CompanyController::class, "companyAjaxData"]);
-        Route::resource('companies', CompanyController::class);
-
-        Route::get('categories/ajax', [CategoryController::class, "labelsAjaxData"]);
-        Route::resource('categories', CategoryController::class);
-
+        // Route::middleware(['checkActivatedAdmin'])->group(function () {
+            Route::resource('registrations', RegistrationController::class)->middleware("checkActivatedAdmin");
+            // Route::get('/schedules/ajax', [ScheduleController::class, "schedulesAjaxData"]);
+            Route::get('events/ajax', [EventController::class, "eventsAjaxData"]);
+            Route::resource('/schedules', ScheduleController::class);
+            Route::resource('events', EventController::class)->middleware("checkActivatedAdmin");
+    
+            Route::get('companies/ajax', [CompanyController::class, "companyAjaxData"]);
+            Route::resource('companies', CompanyController::class);
+    
+            Route::get('categories/ajax', [CategoryController::class, "labelsAjaxData"]);
+            Route::resource('categories', CategoryController::class); 
+        // });
     });
 });

@@ -5,10 +5,16 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Repository\CompanyRepository;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("checkActivatedAdmin", ["except"    => ["edit", "update"]]);
+        $this->middleware("checkSuperAdmin", ["except"    => ["index", "edit", "update", "companyAjaxData"]]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -95,7 +101,7 @@ class CompanyController extends Controller
     public function update(Request $request, Company $company)
     {
         $validator = \Validator::make($request->all(), [
-            "name"  => "required|unique:companies",
+            "name"  => ["required", Rule::unique("companies")->ignore($company->id)],
             "description"   => "required",
             "address"       => "required",
             "phone_number"  => "required",
@@ -138,12 +144,13 @@ class CompanyController extends Controller
     public function companyAjaxData(Request $request) {
         $companies = Company::paginate(25);
         $arrayData = collect([]);
+        $admin     = \Sentinel::check();
 
-        $companies->each(function($q) use($arrayData) {
+        $companies->each(function($q) use($arrayData, $admin) {
             $arrayData->push([
                 $q->name,
                 $q->events->count() ?? 0,
-                '<a href="'.url('/backend/companies/' . $q->id . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>'
+                is_null($admin["company_id"]) ? '<a href="'.url('/backend/companies/' . $q->id . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>' : ($q->event["company_id"] == $admin->company_id ? '<a href="'.url('/backend/companies/' . $q->id . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>' : "")
             ]);
         });
         return response()->json([

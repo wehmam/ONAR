@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("checkActivatedAdmin");
+    }
     /**
      * Display a listing of the resource.
      *
@@ -130,13 +134,15 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function labelsAjaxData(Request $request) {
-        $labels = EventLabel::paginate(10);
-        $arrayData = collect([]);
+        $labels     = EventLabel::paginate(10);
+        $arrayData  = collect([]);
+        $admin      = \Sentinel::check();
 
-        $labels->each(function($q) use($arrayData) {
+
+        $labels->each(function($q) use($arrayData, $admin) {
             $arrayData->push([
                 $q->name ?? "",
-                '<a href="'.url('/backend/categories/' . $q['id'] . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>'
+                is_null($admin->company_id) ? '<a href="'.url('/backend/categories/' . $q['id'] . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>' : ""
             ]);
         });
         return response()->json([

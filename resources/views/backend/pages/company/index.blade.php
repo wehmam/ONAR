@@ -10,7 +10,9 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">List Company <span class="float-right"> <a href="{{ url("backend/companies/create") }}" class="btn btn-success btn-sm" ><i class="fa fa-plus"> Company</i></a></span></h6>
+        @if(is_null(\Sentinel::check()->company_id))
+            <h6 class="m-0 font-weight-bold text-primary">List Company <span class="float-right"> <a href="{{ url("backend/companies/create") }}" class="btn btn-success btn-sm" ><i class="fa fa-plus"> Company</i></a></span></h6>
+        @endif
         </div>
         <div class="card-body">
             <div class="table-responsive">

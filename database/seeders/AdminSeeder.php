@@ -22,6 +22,8 @@ class AdminSeeder extends Seeder
                 "last_login"    => "2022-01-10 04:00:24",
                 "first_name"    => "Super",
                 "last_name"     => "Admin",
+                "created_at"    => now(),
+                "updated_at"    => now()
             ]
         ]);
 
@@ -30,7 +32,9 @@ class AdminSeeder extends Seeder
                 "user_id"       => 1,
                 "code"          => md5(date("Y-m-d H:i:s")),
                 "completed"     => 1,
-                "completed_at"  => date("Y-m-d H:i:s")
+                "completed_at"  => date("Y-m-d H:i:s"),
+                "created_at"    => now(),
+                "updated_at"    => now()
             ]
         ]);
     }

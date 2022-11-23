@@ -3,12 +3,17 @@
 namespace App\Repository;
 
 use App\Models\Company;
+use Cartalyst\Sentinel\Laravel\Facades\Activation;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class CompanyRepository {
 
     public function createOrUpdateCompany($params, $id = null) {
         try {
+
+            DB::beginTransaction();
+
             $findCompany = Company::find($id);
             if(!$findCompany) {
                 $company = new Company();
@@ -32,6 +37,15 @@ class CompanyRepository {
             }
 
             $company->save();
+            
+            // ACTIVATED 
+            $activation = Activation::where("user_id", \Sentinel::check()->id)->first();
+            if($activation) {
+                $activation->completed_at = now();
+                $activation->save();
+            }
+
+            DB::commit();
 
             return responseCustom("Berhasil " . ($findCompany ? "Update" : "Simpan") . " Data Company!", true);
         } catch (\Exception $e) {
