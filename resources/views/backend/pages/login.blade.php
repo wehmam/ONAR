@@ -49,7 +49,7 @@
         @endif --}}
 
     <div class="bg-white md:shadow-lg shadow-none rounded p-6 w-96" >
-        <h1 class="text-3xl font-bold leading-normal" >Sign in Admin</h1>
+        <h1 class="text-3xl font-bold leading-normal" >Sign in Creator</h1>
         <form class="space-y-10 mt-5" method="POST" action="{{ url("backend/login") }}">
             @csrf
 

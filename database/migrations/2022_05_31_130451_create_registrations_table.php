@@ -21,7 +21,7 @@ class CreateRegistrationsTable extends Migration
             $table->decimal("total_price", 15, 2);
             $table->string("status_paid")->default("PENDING");
             $table->timestamp("paid_at")->nullable();
-            $table->timestamp("check_in")->nullazble();
+            $table->timestamp("check_in")->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

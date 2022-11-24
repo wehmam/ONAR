@@ -25,9 +25,17 @@
 <!-- ======= Services Section ======= -->
 <section id="services" class="services">
     <div class="container" data-aos="fade-up">
-
         <div class="section-header mt-5">
-        <h2></h2>
+            <div class="row">
+                <div class="col">
+                  <nav aria-label="breadcrumb" class="rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                      <li class="breadcrumb-item"><a href="{{ url("events") }}">Events</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">{{ $event->event_slug }}</li>
+                    </ol>
+                  </nav>
+                </div>
+            </div>
         </div>
 
         <div class="row gy-5" id="events-data">

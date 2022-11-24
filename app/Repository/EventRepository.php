@@ -23,7 +23,7 @@ class EventRepository {
                 $events = $findEvent;
             }
 
-            $events->company_id = $params["company_id"];
+            $events->company_id = \Sentinel::check()->company_id;
             $events->event_type = $params["event_type"];
             $events->has_active = $params["has_active"];
             $events->event_slug = self::createSlug($params["title"]);
@@ -104,7 +104,7 @@ class EventRepository {
 
             DB::commit();
 
-            return responseCustom("Sukses Create or update event", true);
+            return responseCustom("Sukses Create or update event Please Wait the event publish by super admin", true);
         } catch (\Exception $e) {
             DB::rollBack();
             return responseCustom($e->getMessage(), false);
@@ -159,6 +159,12 @@ class EventRepository {
 
             $register->invoice      = $eventNumber;
             $register->total_price  = $event->eventDetail->price;
+
+            if($event->eventDetail->price <= 0) {
+                $register->status_paid = "FREE";
+                $register->paid_at = now();
+            }
+
             $register->save();
 
             return responseCustom($register->invoice, true);

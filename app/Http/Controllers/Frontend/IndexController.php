@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 class IndexController extends Controller
 {
     public function home() {
-        $events = Event::take(6)
+        $events = Event::whereNotNull("publish_at")->take(6)
             ->inRandomOrder()
             ->get();
         return view('frontend.pages.home', compact('events'));
@@ -40,18 +40,20 @@ class IndexController extends Controller
                 });
         }
 
-        $events = $events->paginate(6);
+        $events = $events->whereNotNull("publish_at")->paginate(6);
         return view('frontend.pages.events' , compact('events'));
     }
 
     public function seeMoreAjaxEventList(Request $request) {
-        $events = Event::with(["eventDetail"])->paginate(6);
+        $events = Event::whereNotNull("publish_at")->with(["eventDetail"])->paginate(6);
         return response()->json($events);
     }
 
     public function eventDetail($slug) {
-        $event = Event::where("event_slug", $slug)
+        $event = Event::whereNotNull("publish_at")
+            ->where("event_slug", $slug)
             ->first();
+
         if(!$event) {
             alertNotify(false, "Event not exist!");
             return redirect(url("events"));
@@ -61,7 +63,8 @@ class IndexController extends Controller
     }
 
     public function registEvent(Request $request) {
-        $event = Event::where("event_slug", $request->get("event_slug")) 
+        $event = Event::whereNotNull("publish_at")
+            ->where("event_slug", $request->get("event_slug")) 
             ->first();
 
         if(!$event) {

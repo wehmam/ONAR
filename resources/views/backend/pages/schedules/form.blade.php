@@ -86,33 +86,33 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="price">Price</label>
-                            <input type="number" name="price" value="{{ isset($event) ? $event->eventDetail->price : 0 }}" class="form-control" id="price">
+                            <input type="number" name="price" value="{{ isset($event) ? $event->eventDetail->price : old("price") }}" class="form-control" id="price">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="event_date">Event Date</label>
-                            <input type="date" name="event_date" class="form-control" value="{{ isset($event) ? $event->eventDetail->event_date : "" }}" id="event_date">
+                            <input type="date" name="event_date" class="form-control" value="{{ isset($event) ? $event->eventDetail->event_date : old("event_date") }}" id="event_date">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="start">Start</label>
-                            <input type="time" name="start_hour" value="{{ isset($event) ? $event->eventDetail->start_hour : "" }}" class="form-control" id="start">
+                            <input type="time" name="start_hour" value="{{ isset($event) ? $event->eventDetail->start_hour : old("start_hour") }}" class="form-control" id="start">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="end">End</label>
-                            <input type="time" name="end_hour" value="{{ isset($event) ? $event->eventDetail->end_hour : "" }}" class="form-control" id="end">
+                            <input type="time" name="end_hour" value="{{ isset($event) ? $event->eventDetail->end_hour : old("end_hour") }}" class="form-control" id="end">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="description">Description</label>
-                            <textarea name="description" class="form-control" id="description" cols="30" rows="5">{{ isset($event) ? $event->eventDetail->description : "" }}</textarea>
+                            <textarea name="description" class="form-control" id="description" cols="30" rows="5">{{ isset($event) ? $event->eventDetail->description : old("description") }}</textarea>
                         </div>
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        {{-- <div class="form-group col-md-6">
                             <label for="event_location">Company (Penyelenggara)</label>
                             <select name="company_id" class="form-control" id="companySelect" required>
                                 <option value="" selected disabled>Select Company</option>
@@ -120,10 +120,10 @@
                                     <option value="{{ $company['id'] }}" {{ isset($event) && $company['id'] == $event->company_id ? "selected" : "" }}>{{ $company['name'] }}</option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group col-md-6">
-                            <label for="event_label">Label Event</label>
+                            <label for="event_label">Label Event <a href="{{ url("backend/categories/create") }}" target="_blank"  class="btn btn-success btn-sm" ><i class="fa fa-plus"></i></a></label>
                             <select name="event_label[]" id="event_label" class="form-control" multiple="multiple" required>
                                 @foreach ($labels as $label)
                                     @if(isset($event))

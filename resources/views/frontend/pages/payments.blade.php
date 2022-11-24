@@ -129,15 +129,23 @@
                                             <td>{{ $startHour->format('H:i') }} - {{ $endHour->format('H:i') }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Total</td>
+                                            <td>Price</td>
                                             <td>:</td>
-                                            <td class="red">Rp. {{ number_format($registration->event->eventDetail->price + 4400) }}</td>
+                                            @if($registration->total_price <= 0) 
+                                                <td>Rp. 0</td>
+                                            @else 
+                                                <td class="red">Rp. {{ number_format($registration->event->eventDetail->price + 4400) }}</td>
+                                            @endif
                                         </tr>
                                         <tr>
                                             <td>Payment Status</td>
                                             <td>:</td>
                                             <td>
-                                                <h3 class="badge">{{ !is_null($registration->dump_payment) && is_null($registration->paid_at) ? "PENDING" : (!is_null($registration->paid_at) ? "Paid" : "Unpaid" ) }}</h3>
+                                                @if($registration->total_price <= 0) 
+                                                    <h3 class="badge">Free</h3>
+                                                @else 
+                                                    <h3 class="badge">{{ !is_null($registration->dump_payment) && is_null($registration->paid_at) ? "PENDING" : (!is_null($registration->paid_at) ? "Paid" : "Unpaid" ) }}</h3>
+                                                @endif
                                             </td>
                                         </tr>
                                     </tbody>

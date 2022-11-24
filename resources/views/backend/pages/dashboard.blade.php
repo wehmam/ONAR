@@ -9,8 +9,8 @@
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        Category</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                        Total Events</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalEvent }}</div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-list-alt fa-2x text-gray-300"></i>
@@ -26,8 +26,8 @@
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        All Participants</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">100</div>
+                        Total Creator (Company)</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalAdmin }}</div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-shopping-bag  fa-2x text-gray-300"></i>
@@ -43,8 +43,8 @@
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        Event Total</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                        Total Participants</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalRegister }}</div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-shopping-basket fa-2x text-gray-300"></i>
@@ -61,7 +61,7 @@
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                         Income (Total)</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">Rp . {{ number_format(65000000, 0) }}</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">Rp . {{ number_format($income, 0) }}</div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>

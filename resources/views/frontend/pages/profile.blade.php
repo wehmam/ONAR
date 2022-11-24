@@ -4,7 +4,7 @@
 
 <section style="background-color: #eee;">
     <div class="container py-5">
-      {{-- <div class="row">
+      <div class="row">
         <div class="col">
           <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
             <ol class="breadcrumb mb-0">
@@ -14,7 +14,7 @@
             </ol>
           </nav>
         </div>
-      </div> --}}
+      </div>
 
       <div class="row">
         <div class="col-lg-4">
@@ -102,7 +102,6 @@
         <div class="row">
           <div class="col-lg-12">
               <div class="card mb-4 mb-md-0">
-                  <div class="table-responsive">
                       <table class="table table-bordered" id="table-schedules">
                           <thead class="text-center">
                               <tr>
@@ -133,7 +132,6 @@
                             </tr>
                           </tbody>
                       </table>
-                  </div>
               </div>
               </div>
           </div>
@@ -209,4 +207,11 @@
     </div>
   </section>
 
+@endsection
+@section('external-js')
+<script>
+  $(document).ready( function () {
+    $('#table-schedules').DataTable();
+  });
+</script>
 @endsection

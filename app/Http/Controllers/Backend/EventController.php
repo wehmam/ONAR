@@ -47,7 +47,7 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            "company_id"    => "required",
+            // "company_id"    => "required",
             "event_type"    => "required",
             "has_active"    => "required|boolean",
             "title"         => "required",
@@ -180,7 +180,8 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function eventsAjaxData(Request $request) {
-        $schedules = Event::paginate(25);
+        $schedules = Event::orderByDesc("id")
+            ->paginate(25);
         $arrayData = collect([]);
         $admin     = \Sentinel::check();
 
@@ -188,10 +189,11 @@ class EventController extends Controller
         $schedules->each(function($q) use($arrayData, $admin) {
             $arrayData->push([
                 $q->eventDetail->title ?? "",
+                $q->company->name ?? "",
                 $q->eventDetail->event_location ?? "",
                 $q["event_type"] == "online" ? "Online" : "Offline",
                 'Rp. '.number_format($q->eventDetail->price,0,'.','.') ?? "Free",
-                is_null($admin["company_id"]) ? '<a href="'.url('/backend/events/' . $q['id'] . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>' : ""
+                is_null($admin["company_id"]) && is_null($q["publish_at"]) ? '<a href="'.url('/backend/events/' . $q['id'] . '/publish').'" class="btn btn-sm btn-info"><i class="fa fa-edit"></i> Publish Events</a>' : (!is_null($q->publish_at) ? '<span class="badge badge-pill badge-info">Publish</span>' : '<span class="badge badge-pill badge-info">Pending</span>')
             ]);
         });
         return response()->json([
@@ -200,5 +202,14 @@ class EventController extends Controller
             "recordsFiltered"   => $schedules->total(),
             "data"              => $arrayData->toArray()
         ]);
+    }
+
+    public function eventsPublish($id) {
+        $event = Event::findOrFail($id);
+        $event->publish_at = now();
+        $event->save();
+
+        alertNotify(true, "Sukses publish event " . $event->eventDetail->title);
+        return redirect()->back();
     }
 }

@@ -27,6 +27,7 @@
   <link href="{{ asset("assets/frontend/vendor/aos/aos.css") }}" rel="stylesheet">
   <link href="{{ asset("assets/frontend/vendor/glightbox/css/glightbox.min.css") }}" rel="stylesheet">
   <link href="{{ asset("assets/frontend/vendor/swiper/swiper-bundle.min.css") }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
   <!-- Variables CSS Files. Uncomment your preferred color scheme -->
   <link href="{{ asset("assets/frontend/css/variables.css") }}" rel="stylesheet">
@@ -74,6 +75,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Template Main JS File -->
     <script src="{{ asset("assets/frontend/js/main.js") }}"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     @yield('external-js')
     <script>
         const sessionStatus  = "{{ Session::has('status') }}"

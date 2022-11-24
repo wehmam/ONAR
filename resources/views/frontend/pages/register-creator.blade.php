@@ -72,6 +72,10 @@
                                 <button type="submit" class="btn btn-lg" style="background-color:#0ea2bd; color:white">Register</button>
                             </div>
 
+                            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                              <a href="{{ url("backend") }}" class="text-center">Login Creator</a>
+                            </div>
+
                         </form>
 
                       </div>

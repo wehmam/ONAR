@@ -9,6 +9,9 @@ use App\Http\Controllers\Backend\RegistrationController;
 use App\Http\Controllers\Backend\ScheduleController;
 use App\Http\Controllers\Frontend\AuthLoginController as FrontendAuthLoginController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Models\AdminUser;
+use App\Models\Event;
+use App\Models\Registration;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,13 +59,19 @@ Route::prefix('backend')->group(function () {
     Route::middleware(['authAdmin'])->group(function() {
         Route::post("/logout", [AuthLoginController::class, 'logout']);
         Route::get("/", function() {
-            return view("backend.pages.dashboard");
+            $totalEvent = Event::count("id");
+            $totalAdmin = AdminUser::whereNotNull("company_id")->count();
+            $totalRegister = Registration::count();
+            $income = Registration::whereNotNull("paid_at")->sum("total_price");
+
+            return view("backend.pages.dashboard", compact("totalEvent", "totalAdmin", "totalRegister", "income"));
         })->middleware("checkActivatedAdmin");
 
         // Route::middleware(['checkActivatedAdmin'])->group(function () {
             Route::resource('registrations', RegistrationController::class)->middleware("checkActivatedAdmin");
             // Route::get('/schedules/ajax', [ScheduleController::class, "schedulesAjaxData"]);
             Route::get('events/ajax', [EventController::class, "eventsAjaxData"]);
+            Route::get('events/{id}/publish', [EventController::class, "eventsPublish"]);
             Route::resource('/schedules', ScheduleController::class);
             Route::resource('events', EventController::class)->middleware("checkActivatedAdmin");
     
