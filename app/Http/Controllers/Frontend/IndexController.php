@@ -54,17 +54,21 @@ class IndexController extends Controller
             ->where("event_slug", $slug)
             ->first();
 
+        $recomendations = Event::whereNotNull("publish_at")
+            ->inRandomOrder()
+            ->paginate(3);
+
         if(!$event) {
             alertNotify(false, "Event not exist!");
             return redirect(url("events"));
         }
 
-        return view('frontend.pages.events-detail', compact('event'));
+        return view('frontend.pages.events-detail', compact('event', 'recomendations'));
     }
 
     public function registEvent(Request $request) {
         $event = Event::whereNotNull("publish_at")
-            ->where("event_slug", $request->get("event_slug")) 
+            ->where("event_slug", $request->get("event_slug"))
             ->first();
 
         if(!$event) {
@@ -80,7 +84,7 @@ class IndexController extends Controller
                 ->back()
                 ->withInput();
         }
-        
+
         $register = (new EventRepository())->registerEvent($request->all());
         if(!$register["status"]) {
             alertNotify($register["status"], $register["data"]);
@@ -113,7 +117,7 @@ class IndexController extends Controller
                 "status"    => false,
                 "data"      => $requestToken["data"]
             ]);
-        }        
+        }
 
         return response()->json([
             "status"    => true,
@@ -122,9 +126,9 @@ class IndexController extends Controller
     }
 
     public function doPayment($invoice , Request $request) {
-        $registration = Registration::where("invoice", $invoice) 
+        $registration = Registration::where("invoice", $invoice)
             ->first();
-        
+
         if($registration) {
             $registration->dump_payment = json_encode($request->all());
             $registration->save();

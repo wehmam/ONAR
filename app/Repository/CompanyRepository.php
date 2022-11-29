@@ -17,11 +17,11 @@ class CompanyRepository {
             $findCompany = Company::find($id);
             if(!$findCompany) {
                 $company = new Company();
+                $company->name          = $params["name"];
             } else {
                 $company = $findCompany;
             }
-            
-            $company->name          = $params["name"];
+
             $company->description   = $params["description"];
             $company->address       = $params["address"];
             $company->phone_number  = $params["phone_number"];
@@ -37,8 +37,8 @@ class CompanyRepository {
             }
 
             $company->save();
-            
-            // ACTIVATED 
+
+            // ACTIVATED
             $activation = Activation::where("user_id", \Sentinel::check()->id)->first();
             if($activation) {
                 $activation->completed_at = now();

@@ -39,7 +39,7 @@
         </div>
 
         <div class="row gy-5" id="events-data">
-            <div class="col-xl-5 col-md-6">
+            <div class="col-xl-5 col-md-6 mb-5">
 
                 <div class="col-md-12">
                     <div class="img">
@@ -76,7 +76,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-5 col-md-6">
+            <div class="col-xl-5 col-md-6 mb-5">
                 <div class="row">
                     <div class="col-md-12 offset-md-3 mb-3">
                         <h2>{{ Str::limit($event->eventDetail->title, 25, '...') }}</h2>
@@ -99,6 +99,36 @@
                     </div>
                 </form>
             </div>
+        </div>
+
+        <div class="row gy-5 mt-5" id="events-data">
+            <div class="row">
+                <div class="col-md-6 mt-5">
+                    <h3>Recomendations events : </h3>
+                </div>
+                <div class="col-md-3 offset-md-3 mt-5 float-rightp">
+                    <a href="#" class="badge badge-primary" style="background-color:#0ea2bd; color:white">See More</a>
+                </div>
+            </div>
+            @foreach($recomendations as $event)
+                <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="service-item">
+                    <div class="img">
+                        <img src="{{ Storage::url($event->eventDetail->banner) }}" class="img-fluid" style=" width:  100%;height: 350px;object-fit: cover;" alt="">
+                    </div>
+                    <div class="details position-relative">
+                        <div class="icon">
+                        <i class="bi bi-activity"></i>
+                        </div>
+                        <a href="{{ url('events/' . $event->event_slug) }}" target="_blank" class="stretched-link">
+                        <h3>{{ $event->eventDetail->title }}</h3>
+                        <h4>{{ $event->eventDetail->price > 0 ?  "Rp . " . number_format($event->eventDetail->price) : "Free" }}</h5>
+                        </a>
+                        <p>{{ $event->eventDetail->limit_description }}</p>
+                    </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
 
 

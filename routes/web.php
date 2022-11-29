@@ -59,7 +59,7 @@ Route::prefix('backend')->group(function () {
     Route::middleware(['authAdmin'])->group(function() {
         Route::post("/logout", [AuthLoginController::class, 'logout']);
         Route::get("/", function() {
-            $totalEvent = Event::count("id");
+            $totalEvent = Event::count();
             $totalAdmin = AdminUser::whereNotNull("company_id")->count();
             $totalRegister = Registration::count();
             $income = Registration::whereNotNull("paid_at")->sum("total_price");
@@ -74,12 +74,12 @@ Route::prefix('backend')->group(function () {
             Route::get('events/{id}/publish', [EventController::class, "eventsPublish"]);
             Route::resource('/schedules', ScheduleController::class);
             Route::resource('events', EventController::class)->middleware("checkActivatedAdmin");
-    
+
             Route::get('companies/ajax', [CompanyController::class, "companyAjaxData"]);
             Route::resource('companies', CompanyController::class);
-    
+
             Route::get('categories/ajax', [CategoryController::class, "labelsAjaxData"]);
-            Route::resource('categories', CategoryController::class); 
+            Route::resource('categories', CategoryController::class);
         // });
     });
 });

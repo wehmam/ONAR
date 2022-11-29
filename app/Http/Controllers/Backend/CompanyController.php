@@ -119,7 +119,7 @@ class CompanyController extends Controller
 
         if(!$response["status"]) {
             return redirect()->back()
-                ->withInput();            
+                ->withInput();
         }
         return redirect(url("/backend/companies"));
     }
@@ -147,10 +147,20 @@ class CompanyController extends Controller
         $admin     = \Sentinel::check();
 
         $companies->each(function($q) use($arrayData, $admin) {
+
+            $text = "";
+            if(is_null($admin["company_id"])) {
+                $text = '<a href="'.url('/backend/companies/' . $q->id . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>';
+            }
+
+            if($admin["company_id"] == $q->id) {
+                $text = '<a href="'.url('/backend/companies/' . $q->id . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>' ;
+            }
+
             $arrayData->push([
                 $q->name,
                 $q->events->count() ?? 0,
-                is_null($admin["company_id"]) ? '<a href="'.url('/backend/companies/' . $q->id . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>' : ($q->event["company_id"] == $admin->company_id ? '<a href="'.url('/backend/companies/' . $q->id . '/edit').'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-edit"></i> Edit</a>' : "")
+                $text
             ]);
         });
         return response()->json([
