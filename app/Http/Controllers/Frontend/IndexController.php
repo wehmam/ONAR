@@ -8,6 +8,7 @@ use App\Models\Registration;
 use App\Models\Schedule;
 use App\Repository\EventRepository;
 use App\Repository\PaymentRepository;
+use App\Services\ActivityService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +28,7 @@ class IndexController extends Controller
     public function eventList(Request $request) {
         $keyword = $request->get("q");
         $events = Event::query();
+
         if($keyword) {
             $events->where("event_type", "LIKE", "%$keyword%")
                 ->orWhereHas("eventLabelLists", function($q) use ($keyword) {
@@ -38,6 +40,8 @@ class IndexController extends Controller
                 ->orWhereHas("eventDetail", function($q) use($keyword) {
                     $q->where("title", "LIKE", "%$keyword%");
                 });
+
+            ActivityService::activity(null, $keyword);
         }
 
         $events = $events->whereNotNull("publish_at")->paginate(6);
@@ -54,14 +58,14 @@ class IndexController extends Controller
             ->where("event_slug", $slug)
             ->first();
 
-        $recomendations = Event::whereNotNull("publish_at")
-            ->inRandomOrder()
-            ->paginate(3);
+        $recomendations = ActivityService::getRecomendation(2);
 
         if(!$event) {
             alertNotify(false, "Event not exist!");
             return redirect(url("events"));
         }
+
+        ActivityService::activity($event->event_slug);
 
         return view('frontend.pages.events-detail', compact('event', 'recomendations'));
     }
