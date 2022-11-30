@@ -106,8 +106,8 @@
                 <div class="col-md-6 mt-5">
                     <h3>Recomendations events : </h3>
                 </div>
-                <div class="col-md-3 offset-md-3 mt-5 float-rightp">
-                    <a href="#" class="badge badge-primary" style="background-color:#0ea2bd; color:white">See More</a>
+                <div class="col-md-6 mt-5 d-flex flex-row-reverse">
+                    <a href="#" class="badge badge-primary m-2" style="background-color:#0ea2bd; color:white">See More</a>
                 </div>
             </div>
             @foreach($recomendations as $event)
