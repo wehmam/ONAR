@@ -44,7 +44,7 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            "name"  => "required|unique:companies",
+            "name"          => "required|unique:companies",
             "description"   => "required",
             "address"       => "required",
             "phone_number"  => "required",
@@ -101,7 +101,7 @@ class CompanyController extends Controller
     public function update(Request $request, Company $company)
     {
         $validator = \Validator::make($request->all(), [
-            "name"  => ["required", Rule::unique("companies")->ignore($company->id)],
+            // "name"  => ["required", Rule::unique("companies")->ignore($company->id)],
             "description"   => "required",
             "address"       => "required",
             "phone_number"  => "required",

@@ -54,8 +54,8 @@
                     @endif
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="name">Name</label>
-                            <input type="text" name="name" value="{{ $company->name ?? old("name") }}" class="form-control" id="title" required>
+                            <label for="name">Company Name</label>
+                            <input type="text" name="name" value="{{ $company->name ?? old("name") }}" class="form-control" id="title" required disabled>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="phone_number">Phone Number</label>

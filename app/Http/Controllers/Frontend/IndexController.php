@@ -58,7 +58,7 @@ class IndexController extends Controller
             ->where("event_slug", $slug)
             ->first();
 
-        $recomendations = ActivityService::getRecomendation(2);
+        $recomendations = ActivityService::getRecomendation($event->id, $event->event_slug);
 
         if(!$event) {
             alertNotify(false, "Event not exist!");

@@ -23,7 +23,7 @@ class ActivityService {
         }
     }
 
-    public static function getRecomendation($exceptId = null) {
+    public static function getRecomendation($exceptId = null, $exceptSlug = null) {
         try {
             $recomendationBaseKeyword = ActivityLog::where("user_id", Auth::user()->id)
                 ->select("keyword")
@@ -37,10 +37,11 @@ class ActivityService {
                 ->select("event_slug")
                 ->selectRaw('count(event_slug) as qty')
                 ->whereNotNull("event_slug")
+                ->where("event_slug", "!=", $exceptSlug)
                 ->groupBy("event_slug")
                 ->orderBy('qty', 'DESC')
                 ->first();
-            
+
             $keyword    = $recomendationBaseKeyword->keyword ?? null;
             $slug       = $recomendationBaseSlug->event_slug ?? null;
             $eventIdAll = collect([]);
@@ -88,13 +89,20 @@ class ActivityService {
                 }
             }
 
+            $listRecomendation = null;
             if($eventIdAll->isNotEmpty()) {
-                return Event::whereIn("id" ,$eventIdAll->toArray())
+                $listRecomendation =  Event::whereIn("id" ,$eventIdAll->toArray())
                     ->where("id", "!=", $exceptId)
                     ->paginate(3);
-            } else {
-                return Event::inRandomOrder()->paginate(3);
-            }           
+            }
+
+            if(!$listRecomendation->isNotEmpty()) {
+                $listRecomendation = Event::inRandomOrder()
+                    ->where("id", "!=", $exceptId)
+                    ->paginate(3);
+            }
+
+            return $listRecomendation;
         } catch (\Exception $th) {
             return null;
         }
