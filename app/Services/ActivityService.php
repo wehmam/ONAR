@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services;
 
@@ -12,7 +12,7 @@ class ActivityService {
     public static function activity($eventSlug = null, $keyword = null) {
         try {
             $activity               = new ActivityLog();
-            $activity->user_id      = Auth::user()->id; 
+            $activity->user_id      = Auth::user()->id;
             $activity->event_slug   = $eventSlug;
             $activity->keyword      = $keyword;
             $activity->save();
@@ -46,7 +46,7 @@ class ActivityService {
             $slug       = $recomendationBaseSlug->event_slug ?? null;
             $eventIdAll = collect([]);
 
-           
+
             if($keyword) {
                 $eventKeyword = Event::select("id")->where("event_type", "LIKE", "%$keyword%")
                 ->orWhereHas("eventLabelLists", function($q) use ($keyword) {
@@ -63,8 +63,8 @@ class ActivityService {
                     $eventKeywordId = $eventKeyword->pluck('id');
                     $eventIdAll     = $eventIdAll->merge($eventKeywordId);
                 };
-                
-                
+
+
             }
 
             if($slug) {
@@ -81,11 +81,11 @@ class ActivityService {
                                 $q->where("name", "LIKE", "%$label%");
                             });
                         }
-                        
+
                         $eventWithSlugId = $eventWithSlug->pluck("id")->toArray();
                         $eventIdAll      = $eventIdAll->merge($eventWithSlugId);
                     }
-                   
+
                 }
             }
 
@@ -96,7 +96,7 @@ class ActivityService {
                     ->paginate(3);
             }
 
-            if(!$listRecomendation->isNotEmpty()) {
+            if(is_null($listRecomendation)) {
                 $listRecomendation = Event::inRandomOrder()
                     ->where("id", "!=", $exceptId)
                     ->paginate(3);
