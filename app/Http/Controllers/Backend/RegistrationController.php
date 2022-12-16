@@ -13,9 +13,25 @@ class RegistrationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('backend.pages.registration.index');
+        $company      = \Sentinel::check()->company_id;
+        $status       = $request->get("status_paid");
+
+        $participants = Registration::query();
+        if(!is_null($company)) {
+            $participants = $participants->whereHas("event", function($q) use($company) {
+                $q->where("company_id", $company);
+            });
+        }
+
+        if(!is_null($status) && $status == "paid") {
+            $participants = $participants->whereNotNull("paid_at");
+        }
+
+        $participants = $participants->paginate(10);
+
+        return view('backend.pages.registration.index', compact('participants'));
     }
 
     /**
