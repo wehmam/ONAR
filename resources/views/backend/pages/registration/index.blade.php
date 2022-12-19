@@ -19,37 +19,33 @@
                         <tr>
                             <th>Invoice</th>
                             <th>Name</th>
+                            <th>Company</th>
                             <th>Events</th>
                             <th>Price</th>
                             <th>Status Payment</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                        <tr>
-                            <td>ONR1234</td>
-                            <td>Imam Maulana Ashari</td>
-                            <td>Event Hackathon 2022</td>
-                            <td>Rp . 200,000</td>
-                            <td><span class="badge badge-success">Paid</span></td>
-                        </tr>
-                        <tr>
-                            <td>ONR12355</td>
-                            <td>Ayu Nandita Ashari</td>
-                            <td>Event Hacklab 2022</td>
-                            <td>Rp . 100,000</td>
-                            <td><span class="badge badge-danger">Not Paid</span></td>
-                        </tr>
-                        <tr>
-                            <td>ONR12322</td>
-                            <td>Fathan Mahavira Prasetyo</td>
-                            <td>Event Cloud Services</td>
-                            <td>Rp . 300,000</td>
-                            <td><span class="badge badge-success">Paid</span></td>
-                        </tr>
+                        @foreach ($participants as $data)
+                            <tr>
+                                <td>{{ $data->invoice }}</td>
+                                <td>{{ $data->user->name ?? "" }}</td>
+                                <td>{{ $data->event->company->name ?? "" }}</td>
+                                <td>{{ $data->event->eventDetail->title ?? "" }}</td>
+                                <td>Rp . {{ number_format($data->total_price , 2) ?? 0 }}</td>
+                                <td>
+                                    @if(!is_null($data->paid_at))
+                                        <span class="badge alert-success">PAID</span>
+                                    @else
+                                        <span class="badge alert-danger">UNPAID</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 <div class="text-center">
-                    {{-- {!! $category->appends($_GET)->links() !!} --}}
+                    {!! $participants->appends($_GET)->links() !!}
                 </div>
             </div>
         </div>

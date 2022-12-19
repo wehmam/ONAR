@@ -22,7 +22,9 @@ class IndexController extends Controller
     }
 
     public function profile() {
-        return view('frontend.pages.profile');
+        $registers = Registration::where("user_id", \Auth::user()->id)->get();
+
+        return view('frontend.pages.profile', compact('registers'));
     }
 
     public function eventList(Request $request) {

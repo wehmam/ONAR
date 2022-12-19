@@ -102,36 +102,34 @@
         <div class="row">
           <div class="col-lg-12">
               <div class="card mb-4 mb-md-0">
-                      <table class="table table-bordered" id="table-schedules">
-                          <thead class="text-center">
-                              <tr>
-                                  <th>Events</th>
-                                  <th>Register Date</th>
-                                  <th>Status</th>
-                                  <th>Price</th>
-                              </tr>
-                          </thead>
-                          <tbody class="text-center">
-                            <tr>
-                              <td>Event Hackathon 2022</td>
-                              <td>10 Juni 2022</td>
-                              <td><span class="badge alert-success">Paid</span></td>
-                              <td>Rp . 100,000</td>
-                            </tr>
-                            <tr>
-                              <td>GoTech 2022</td>
-                              <td>10 Juli 2022</td>
-                              <td><span class="badge alert-danger">Not Paid</span></td>
-                              <td>Rp . 100,000</td>
-                            </tr>
-                            <tr>
-                              <td>Event Cloud Service 2019</td>
-                              <td>10 Februari 2022</td>
-                              <td><span class="badge alert-success">Paid</span></td>
-                              <td>Rp . 100,000</td>
-                            </tr>
-                          </tbody>
-                      </table>
+                  <table class="table table-bordered" id="table-schedules">
+                      <thead class="text-center">
+                          <tr>
+                              <th>Events</th>
+                              <th>Register Date</th>
+                              <th>Status</th>
+                              <th>Price</th>
+                              <th>Detail Invoice</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        @foreach ($registers as $data)
+                          <tr>
+                            <td>{{ $data->event->eventDetail->title ?? "" }}</td>
+                            <td>{{ $data->created_at ?? " "}}</td>
+                            <td>
+                              @if ($data->status_paid == "paid")
+                                <span class="badge alert-success">Paid</span>
+                              @else
+                                <span class="badge alert-warning">Unpaid</span>
+                              @endif
+                            </td>
+                            <td>Rp . {{ number_format($data->total_price, 2) ?? 0 }}</td>
+                            <td><a href="{{ url("events/pay/" . $data->invoice) }}" class="badge alert-info" target="_blank">Detail</a></td>
+                          </tr>
+                        @endforeach
+                      </tbody>
+                  </table>
               </div>
               </div>
           </div>
