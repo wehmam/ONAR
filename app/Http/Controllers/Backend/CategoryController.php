@@ -13,6 +13,7 @@ class CategoryController extends Controller
     public function __construct()
     {
         $this->middleware("checkActivatedAdmin");
+        $this->middleware("exceptionSuperAdmin", ["except"    => ["index", "labelsAjaxData"]]);
     }
     /**
      * Display a listing of the resource.

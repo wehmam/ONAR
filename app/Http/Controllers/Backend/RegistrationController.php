@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 
@@ -16,12 +17,26 @@ class RegistrationController extends Controller
     public function index(Request $request)
     {
         $company      = \Sentinel::check()->company_id;
-        $status       = $request->get("status_paid");
+        $companies    = Company::get();
+        $status       = $request->get("status_payment");
+        $invoice      = $request->get("invoice");
+        $companyName  = $request->get("company");
 
         $participants = Registration::query();
+
+        if(!is_null($invoice)) {
+            $participants = $participants->where("invoice", "LIKE", "%".$invoice."%");
+        }
+
         if(!is_null($company)) {
             $participants = $participants->whereHas("event", function($q) use($company) {
                 $q->where("company_id", $company);
+            });
+        }
+
+        if(is_null(\Sentinel::check()->company_id) && !is_null($companyName)) {
+            $participants = $participants->whereHas("event", function($q) use($companyName) {
+                $q->where("company_id", $companyName);
             });
         }
 
@@ -31,7 +46,7 @@ class RegistrationController extends Controller
 
         $participants = $participants->paginate(10);
 
-        return view('backend.pages.registration.index', compact('participants'));
+        return view('backend.pages.registration.index', compact('participants', 'companies'));
     }
 
     /**

@@ -33,18 +33,5 @@
 
 @endsection
 @section('js')
-<script src="{{ asset("assets/backend/js/companies.js?v=1.0") }}"></script>
-<script>
-        const sessionStatus  = "{{ Session::has('status') }}"
-        const sessionMessage = "{{ Session::get('status') }}"
-        const sessionClass   = "{{ Session::get('alert-class') }}"
-
-        if(sessionStatus) {
-            Swal.fire(
-                sessionClass == "error" ? "Opps!" : "Success!" ,
-                sessionMessage,
-                sessionClass
-            )
-        }
-    </script>
+    <script src="{{ asset("assets/backend/js/companies.js?v=1.0") }}"></script>
 @endsection

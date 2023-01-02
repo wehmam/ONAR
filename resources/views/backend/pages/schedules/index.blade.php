@@ -10,7 +10,9 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">List Events <span class="float-right"> <a href="{{ url("backend/events/create") }}" class="btn btn-success btn-sm" ><i class="fa fa-plus"> Events</i></a></span></h6>
+        @if(!is_null(\Sentinel::check()->company_id))
+            <h6 class="m-0 font-weight-bold text-primary">List Events <span class="float-right"> <a href="{{ url("backend/events/create") }}" class="btn btn-success btn-sm" ><i class="fa fa-plus"> Events</i></a></span></h6>
+        @endif
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -77,42 +79,5 @@
 
 @endsection
 @section('js')
-<script src="{{ asset("assets/backend/js/schedules.js") }}"></script>
-<script>
-        const sessionStatus  = "{{ Session::has('status') }}"
-        const sessionMessage = "{{ Session::get('status') }}"
-        const sessionClass   = "{{ Session::get('alert-class') }}"
-
-        if(sessionStatus) {
-            Swal.fire(
-                sessionClass == "error" ? "Opps!" : "Success!" ,
-                sessionMessage,
-                sessionClass
-            )
-        }
-
-        // $('#exampleModal').on('show.bs.modal', function (event) {
-        //     let button = $(event.relatedTarget) // Button that triggered the modal
-        //     let titleModal = button.data('whatever') // Extract info from data-* attributes
-        //     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        //     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        //     let modal = $(this)
-        //     modal.find('.modal-title').text(titleModal)
-        //     // modal.find('.modal-body input').val(titleModal)
-        // })
-
-        // $('#onSubmit').submit((e) => {
-        //     let category     = $('#category-name').val();
-        //     let categorySlug = $('#slug-category').val();
-        //     let isActive    = $('#is_active').val();
-        //     let mainImage   = $('#main_image').files();
-
-        //     console.log(mainImage)
-
-
-        //     e.preventDefault();
-        //     return false;
-        // })
-
-    </script>
+    <script src="{{ asset("assets/backend/js/schedules.js") }}"></script>
 @endsection

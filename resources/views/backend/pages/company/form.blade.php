@@ -128,18 +128,6 @@
 
         });
 
-        const sessionStatus = "{{ Session::has('status') }}"
-        const sessionMessage = "{{ Session::get('status') }}"
-        const sessionClass = "{{ Session::get('alert-class') }}"
-        console.log("session class " + sessionClass)
-        if (sessionStatus) {
-            Swal.fire(
-                sessionClass == "error" ? "Opps!" : "Success!",
-                sessionMessage,
-                sessionClass
-            )
-        }
-
         let loadFile = (event) => {
             let reader = new FileReader()
             document.getElementById('previewImg').classList.remove('hidden');

@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'authAdmin'             => \App\Http\Middleware\AuthenticateAdmin::class,
         'checkActivatedAdmin'   => \App\Http\Middleware\CheckActivatedAdmin::class,
         'checkSuperAdmin'       => \App\Http\Middleware\CheckSuperAdmin::class,
+        'exceptionSuperAdmin'   => \App\Http\Middleware\ExceptionSuperAdminScope::class,
     ];
 }

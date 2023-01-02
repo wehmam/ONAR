@@ -10,6 +10,47 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
+            <form action="{{ url("/backend/participants") }}" method="GET">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="">Status Payment</label>
+                            <select name="status_payment" id="" class="form-control">
+                                <option value="">All</option>
+                                <option value="paid">PAID</option>
+                                <option value="unpaid">UNPAID</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="">Invoice</label>
+                            <input type="text" class="form-control" name="invoice">
+                        </div>
+                    </div>
+
+                    @if(is_null(\Sentinel::check()->company_id))
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="">Company</label>
+                                <select name="company" id="" class="form-control">
+                                    <option value="">All</option>
+                                    @foreach ($companies as $company)
+                                        <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="col-md-3 mt-4">
+                        <button type="submit" class="btn btn-md btn-info"><span class="fa fa-search"></span> Search</button>
+                        <a href="#" class="btn btn-md btn-success"><span class="fa fa-file"></span> Export</a>
+                    </div>
+
+                </div>
+            </form>
         {{-- <h6 class="m-0 font-weight-bold text-primary">List Participant <span class="float-right"> <a href="{{ url("backend/events/create") }}" class="btn btn-success btn-sm" ><i class="fa fa-plus"> Events</i></a></span></h6> --}}
         </div>
         <div class="card-body">

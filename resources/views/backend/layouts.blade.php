@@ -435,6 +435,19 @@
     {{-- <script src="{{ asset("assets/backend/js/demo/chart-pie-demo.js") }}"></script> --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script>
+        const sessionStatus  = "{{ Session::has('status') }}"
+        const sessionMessage = "{{ Session::get('status') }}"
+        const sessionClass   = "{{ Session::get('alert-class') }}"
+
+        if(sessionStatus) {
+            Swal.fire(
+                sessionClass == "error" ? "Opps!" : "Success!" ,
+                sessionMessage,
+                sessionClass
+            )
+        }
+    </script>
     @yield('js')
 </body>
 

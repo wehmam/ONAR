@@ -14,6 +14,7 @@ class EventController extends Controller
     public function __construct()
     {
         $this->middleware("checkActivatedAdmin");
+        $this->middleware("exceptionSuperAdmin", ["except"    => ["index", "eventsAjaxData", "eventsPublish"]]);
     }
 
     /**
