@@ -44,6 +44,7 @@ class MidtransService {
                 "merchant_name" => "Midtrans.com"
             ],
             "enabled_payments"   => ["bca_va", "bni_va", "other_va", "echannel", "gci", "credit_card", "gopay"]
+            
         ]);
 
         return $snap_token;
