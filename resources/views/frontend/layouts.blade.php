@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<title>@yield("title", "ONAR.")</title>
+<title>@yield("title", "PSO.")</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
   <meta name="_token" content="{{ csrf_token() }}">

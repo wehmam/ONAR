@@ -5,7 +5,7 @@
     <section id="hero-animated" class="hero-animated d-flex align-items-center">
         <div class="container d-flex flex-column justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
             <img src="{{ asset("assets/frontend/img/hero-carousel/hero-carousel-3.svg") }}" class="img-fluid animated">
-            <h2>Welcome to <span>ONAR</span></h2>
+            <h2>Welcome to <span>PSO</span></h2>
             <p>We Care About Everything You Need to Know.</p>
             @if(!Auth::check())
                 <div class="d-flex">
@@ -150,7 +150,7 @@
 
           <div class="section-header mb-5">
             <h2>Want To Be Creator</h2>
-            <p>You can publish your events in ONAR, come on register and publish you events</p>
+            <p>You can publish your events in PSO, come on register and publish you events</p>
           </div>
 
           <div class="row gy-5">
