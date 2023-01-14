@@ -77,6 +77,39 @@
                                 </div>
                             </div>
                         @endif
+
+                        @if($registration->paid_at)
+                        <div class="col-md-12">
+                            <p class="card-desc mt-5" style="text-align:center">Detail Events</p>
+                            <div class="card col-md-12 mb-3">
+                                <div class="table-responsive mt-5 p-5">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                                <tr>
+                                                    <th>Event Type</th>
+                                                    <td style="text-transform: capitalize;">{{ $registration->event->event_type == "online" ? "Online" : "Offline" }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Event location</th>
+                                                    <td style="text-transform: capitalize;">{{ $registration->event->eventDetail->event_location }}</td>
+                                                </tr>
+                                                @if($registration->event->event_type != "online")
+                                                    <tr>
+                                                        <th>Event Location Detail</th>
+                                                        <td style="text-transform: capitalize;">The Location detail will be inform soon by Organizer</td>
+                                                    </tr>
+                                                @else
+                                                    <tr>
+                                                        <th>Event Link</th>
+                                                        <td style="text-transform: capitalize;">{{ $registration->event->eventDetail->link_event ? $registration->event->eventDetail->link_event : "Will be updated" }}</td>
+                                                    </tr>
+                                                @endif
+                                            </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-xl-5 col-md-6">
@@ -105,7 +138,7 @@
                                             <td>:</td>
                                             <td>{{ $registration->user->email ?? "" }}</td>
                                         </tr>
-                                        
+
                                         @php
                                             $date = \Carbon\Carbon::parse($registration->event->eventDetail->event_date)->locale('id');
                                             $date->settings(['formatFunction' => 'translatedFormat']);
@@ -131,9 +164,9 @@
                                         <tr>
                                             <td>Price</td>
                                             <td>:</td>
-                                            @if($registration->total_price <= 0) 
+                                            @if($registration->total_price <= 0)
                                                 <td>Rp. 0</td>
-                                            @else 
+                                            @else
                                                 <td class="red">Rp. {{ number_format($registration->event->eventDetail->price + 4400) }}</td>
                                             @endif
                                         </tr>
@@ -141,9 +174,9 @@
                                             <td>Payment Status</td>
                                             <td>:</td>
                                             <td>
-                                                @if($registration->total_price <= 0) 
+                                                @if($registration->total_price <= 0)
                                                     <h3 class="badge">Free</h3>
-                                                @else 
+                                                @else
                                                     <h3 class="badge">{{ !is_null($registration->dump_payment) && is_null($registration->paid_at) ? "PENDING" : (!is_null($registration->paid_at) ? "Paid" : "Unpaid" ) }}</h3>
                                                 @endif
                                             </td>
@@ -154,7 +187,7 @@
                                     @if(is_null($registration->paid_at))
                                         @if($registration->dump_payment)
                                             <button class="btn btn-md btn-warning btn-pay">Change Payment</button>
-                                        @else 
+                                        @else
                                             <button class="btn btn-md btn-warning btn-pay">Bank Online</button>
                                         @endif
                                     @endif
