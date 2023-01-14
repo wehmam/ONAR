@@ -181,20 +181,29 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function eventsAjaxData(Request $request) {
-        $schedules = Event::orderByDesc("id")
+        $superAdmin = true ;
+        if(!is_null(\Sentinel::check()->company_id)) {
+            $superAdmin = false;
+        }
+
+        $schedules = Event::query();
+        if(!$superAdmin) {
+            $schedules = Event::where("company_id", \Sentinel::check()->company_id);
+        }
+        $schedules = $schedules
+            ->orderByDesc("id")
             ->paginate(25);
+
         $arrayData = collect([]);
-        $admin     = \Sentinel::check();
 
-
-        $schedules->each(function($q) use($arrayData, $admin) {
+        $schedules->each(function($q) use($arrayData) {
             $arrayData->push([
                 $q->eventDetail->title ?? "",
                 $q->company->name ?? "",
                 $q->eventDetail->event_location ?? "",
                 $q["event_type"] == "online" ? "Online" : "Offline",
                 'Rp. '.number_format($q->eventDetail->price,0,'.','.') ?? "Free",
-                is_null($admin["company_id"]) && is_null($q["publish_at"]) ? '<a href="'.url('/backend/events/' . $q['id'] . '/publish').'" class="btn btn-sm btn-info"><i class="fa fa-edit"></i> Publish Events</a>' : (!is_null($q->publish_at) ? '<span class="badge badge-pill badge-info">Publish</span>' : '<span class="badge badge-pill badge-info">Pending</span>')
+                is_null(\Sentinel::check()->company_id) && is_null($q["publish_at"]) ? '<a href="'.url('/backend/events/' . $q['id'] . '/publish').'" class="btn btn-sm btn-info"><i class="fa fa-edit"></i> Publish Events</a>' : (!is_null($q->publish_at) ? '<span class="badge badge-pill badge-info">Publish</span>' : '<span class="badge badge-pill badge-info">Pending</span>')
             ]);
         });
         return response()->json([
