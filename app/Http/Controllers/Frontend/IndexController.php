@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\TestEmail;
 use App\Models\Event;
 use App\Models\Registration;
 use App\Models\Schedule;
@@ -11,6 +12,7 @@ use App\Repository\PaymentRepository;
 use App\Services\ActivityService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class IndexController extends Controller
 {
@@ -149,5 +151,9 @@ class IndexController extends Controller
     public function paymentCallback(Request $request) {
         $callback = (new PaymentRepository())->paymentCallback($request);
         return response()->json($callback);
+    }
+
+    public function testEmail() {
+        dd(Mail::to("readytosurff@gmail.com")->send(new TestEmail));
     }
 }

@@ -25,6 +25,7 @@ use App\Models\Registration;
 */
 
 Route::get('/', [IndexController::class, 'home']);
+Route::get("/email", [IndexController::class, 'testEmail']);
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [FrontendAuthLoginController::class, 'login'])->name("login");
