@@ -89,11 +89,11 @@
                                                     <th>Event Type</th>
                                                     <td style="text-transform: capitalize;">{{ $registration->event->event_type == "online" ? "Online" : "Offline" }}</td>
                                                 </tr>
-                                                <tr>
-                                                    <th>Event location</th>
-                                                    <td style="text-transform: capitalize;">{{ $registration->event->eventDetail->event_location }}</td>
-                                                </tr>
                                                 @if($registration->event->event_type != "online")
+                                                    <tr>
+                                                        <th>Event location</th>
+                                                        <td style="text-transform: capitalize;">{{ $registration->event->eventDetail->event_location }}</td>
+                                                    </tr>
                                                     <tr>
                                                         <th>Event Location Detail</th>
                                                         <td style="text-transform: capitalize;">The Location detail will be inform soon by Organizer</td>
