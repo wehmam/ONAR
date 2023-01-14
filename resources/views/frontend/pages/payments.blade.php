@@ -80,8 +80,8 @@
 
                         @if($registration->paid_at)
                         <div class="col-md-12">
-                            <p class="card-desc mt-5" style="text-align:center">Detail Events</p>
                             <div class="card col-md-12 mb-3">
+                                <h5 class="card-desc mt-5" style="text-align:center">Detail Events</h5>
                                 <div class="table-responsive mt-5 p-5">
                                     <table class="table table-hover">
                                         <tbody>
