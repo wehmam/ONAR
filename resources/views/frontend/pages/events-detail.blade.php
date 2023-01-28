@@ -79,7 +79,10 @@
             <div class="col-xl-5 col-md-6 mb-5">
                 <div class="row">
                     <div class="col-md-12 offset-md-3 mb-3">
-                        <h2>{{ Str::limit($event->eventDetail->title, 25, '...') }}</h2>
+                        <h2>
+                            {{ Str::limit($event->eventDetail->title, 25, '...') }}
+                            <span class="custom-tag-lists text-center">{{ ucwords($event->event_type) }}</span>
+                        </h2>
                     </div>
                     <div class="col-md-12 offset-md-3 mt-3">
                         <h3>Rp . {{ number_format($event->eventDetail->price) }}</h1>

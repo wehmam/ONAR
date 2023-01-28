@@ -179,7 +179,16 @@ class ScheduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function schedulesAjaxData(Request $request) {
-        $schedules = Event::paginate(25);
+        $superAdmin = true ;
+        if(!is_null(\Sentinel::check()->company_id)) {
+            $superAdmin = false;
+        }
+
+        $schedules = Event::query();
+        if(!$superAdmin) {
+            $schedules = Event::where("company_id", \Sentinel::check()->company_id);
+        }
+        $schedules = $schedules->paginate(25);
         $arrayData = collect([]);
 
         $schedules->each(function($q) use($arrayData) {

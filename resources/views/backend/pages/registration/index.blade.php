@@ -60,6 +60,7 @@
                         <tr>
                             <th>Invoice</th>
                             <th>Name</th>
+                            <th>Email</th>
                             <th>Company</th>
                             <th>Events</th>
                             <th>Price</th>
@@ -71,6 +72,7 @@
                             <tr>
                                 <td>{{ $data->invoice }}</td>
                                 <td>{{ $data->user->name ?? "" }}</td>
+                                <td>{{ $data->user->email ?? "" }}</td>
                                 <td>{{ $data->event->company->name ?? "" }}</td>
                                 <td>{{ $data->event->eventDetail->title ?? "" }}</td>
                                 <td>Rp . {{ number_format($data->total_price , 2) ?? 0 }}</td>
