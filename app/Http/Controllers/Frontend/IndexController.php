@@ -154,7 +154,7 @@ class IndexController extends Controller
     }
 
     public function testEmail() {
-        dispatch(new SendEmailNewUser("wehmam88@gmail.com"));
+        #dispatch(new SendEmailNewUser("wehmam88@gmail.com"));
         return true;
     }
 }

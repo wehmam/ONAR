@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Jobs\SendEmailNewUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -45,6 +46,8 @@ class AuthLoginController extends Controller
         ]);
 
         Auth::login($user);
+
+        dispatch(new SendEmailNewUser($request->email));
 
         return redirect(url("/"));
     }
