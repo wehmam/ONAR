@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Queue\SerializesModels;
 
-class TestEmail extends Mailable
+class RegisterUser extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -23,9 +23,9 @@ class TestEmail extends Mailable
     public function __construct()
     {
         $this->message = (new MailMessage)
-            ->line('Terima kasih telah mendaftar di Event A.')
-            ->line('Silahkan Lakukan Pembayaran segera, terima kasih!.')
-            ->action('Klik Disini', "https://event.onar.asia");
+            ->line("Terima kasih telah mendaftar di PSO Events")
+            ->line("Silakan login dan mendaftar di events yang anda inginkan!")
+            ->action("Login", "https://event.onar.asia/login");
     }
 
     /**

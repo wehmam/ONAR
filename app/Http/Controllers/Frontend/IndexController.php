@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Mail\TestEmail;
+use App\Jobs\SendEmailNewUser;
 use App\Models\Event;
 use App\Models\Registration;
 use App\Models\Schedule;
@@ -154,6 +154,7 @@ class IndexController extends Controller
     }
 
     public function testEmail() {
-        dd(Mail::to("readytosurff@gmail.com")->send(new TestEmail));
+        dispatch(new SendEmailNewUser("wehmam88@gmail.com"));
+        return true;
     }
 }
