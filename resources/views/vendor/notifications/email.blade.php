@@ -43,7 +43,7 @@
 @else
 
 @lang('Salam Hangat'),<br>
-ONAR.
+PSO.
 @endif
 
 {{-- Subcopy --}}
