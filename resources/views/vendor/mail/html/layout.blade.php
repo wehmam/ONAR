@@ -29,7 +29,7 @@
         <td align="center">
             <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
 
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        {{-- <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr>
                                 <td class="p30-15" style="padding: 50px 0px 40px 0px;">
                                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -49,7 +49,7 @@
                                     </table>
                                 </td>
                             </tr>
-                        </table>
+                        </table> --}}
 
 
             <!-- Email Body -->

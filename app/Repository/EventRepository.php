@@ -1,7 +1,8 @@
-<?php 
+<?php
 
 namespace App\Repository;
 
+use App\Jobs\SendEmailRegisterEvent;
 use App\Models\Event;
 use App\Models\EventDetail;
 use App\Models\Registration;
@@ -55,26 +56,26 @@ class EventRepository {
                 //     }
                 // }
                 // $events->event_number = $eventNumber;
-            // }            
+            // }
             $events->save();
 
             $findEventDetail = EventDetail::where("event_id", $events->id)
                 ->first();
-            
+
             if(!$findEventDetail) {
                 $eventDetail = new EventDetail();
                 $eventDetail->event_id = $events->id;
             } else {
                 $eventDetail = $findEventDetail;
             }
-            
+
             $eventDetail->title = $params["title"];
             $eventDetail->price = $params["price"];
             $eventDetail->event_date = $params["event_date"];
             $eventDetail->start_hour = $params["start_hour"];
             $eventDetail->end_hour = $params["end_hour"];
 
-            
+
             if(isset($params["upload_image"])) {
                 if($findEventDetail) {
                     if(Storage::exists($findEventDetail->banner)) {
@@ -82,7 +83,7 @@ class EventRepository {
                     }
                 }
                 $eventDetail->banner =  Storage::putFile("public/images/schedules" , $params["upload_image"]);
-            } 
+            }
 
             $eventDetail->event_location = $params["event_location"] ;
             $eventDetail->description = $params["description"];
@@ -94,7 +95,7 @@ class EventRepository {
             foreach($params["event_label"] as $eventLabel) {
                 $labels->push([
                     "name"  => $eventLabel
-                ]); 
+                ]);
             }
 
             if(!is_null($events->eventLabelLists)) {
@@ -121,7 +122,7 @@ class EventRepository {
                 ["user_id", $user->id],
                 ["event_id", $event->id]
             ])->first();
-            
+
             if($findRegistration) {
                 return responseCustom($findRegistration->invoice , true);
             }
@@ -166,6 +167,8 @@ class EventRepository {
             }
 
             $register->save();
+
+            dispatch(new SendEmailRegisterEvent($user->email , $register));
 
             return responseCustom($register->invoice, true);
         } catch (\Exception $e) {

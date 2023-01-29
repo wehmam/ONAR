@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\SendEmailNewUser;
+use App\Jobs\SendEmailSuccessPayment;
 use App\Models\Event;
 use App\Models\Registration;
-use App\Models\Schedule;
 use App\Repository\EventRepository;
 use App\Repository\PaymentRepository;
 use App\Services\ActivityService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 
 class IndexController extends Controller
 {
@@ -154,7 +152,10 @@ class IndexController extends Controller
     }
 
     public function testEmail() {
-        #dispatch(new SendEmailNewUser("wehmam88@gmail.com"));
+        $register = Registration::where("invoice", "ONR2301290001")->first();
+
+        dispatch(new SendEmailSuccessPayment("wehmam88@gmail.com",$register));
+
         return true;
     }
 }
