@@ -16,9 +16,9 @@
                         <div class="form-group">
                             <label for="">Status Payment</label>
                             <select name="status_payment" id="" class="form-control">
-                                <option value="">All</option>
-                                <option value="paid">PAID</option>
-                                <option value="unpaid">UNPAID</option>
+                                <option value="" {{ !request()->get("status_payment") ? "selected" : "" }}>All</option>
+                                <option value="paid" {{ request()->get("status_payment") == "paid" ? "selected" : "" }}>PAID</option>
+                                <option value="unpaid" {{ request()->get("status_payment") == "unpaid" ? "selected" : "" }}>UNPAID</option>
                             </select>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="">Invoice</label>
-                            <input type="text" class="form-control" name="invoice">
+                            <input type="text" class="form-control" name="invoice" value="{{ request()->get("invoice") }}">
                         </div>
                     </div>
 
@@ -37,7 +37,7 @@
                                 <select name="company" id="" class="form-control">
                                     <option value="">All</option>
                                     @foreach ($companies as $company)
-                                        <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                        <option value="{{ $company->id }}" {{ request()->get("company") == $company->name ? "selected" : ""  }}>{{ $company->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -46,7 +46,7 @@
 
                     <div class="col-md-3 mt-4">
                         <button type="submit" class="btn btn-md btn-info"><span class="fa fa-search"></span> Search</button>
-                        <a href="#" class="btn btn-md btn-success"><span class="fa fa-file"></span> Export</a>
+                        {{-- <a href="#" class="btn btn-md btn-success"><span class="fa fa-file"></span> Export</a> --}}
                     </div>
 
                 </div>
