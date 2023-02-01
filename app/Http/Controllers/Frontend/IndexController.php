@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendEmailSuccessPayment;
 use App\Models\Event;
+use App\Models\EventLabel;
 use App\Models\Registration;
 use App\Repository\EventRepository;
 use App\Repository\PaymentRepository;
@@ -28,26 +29,42 @@ class IndexController extends Controller
     }
 
     public function eventList(Request $request) {
-        $keyword = $request->get("q");
-        $events = Event::query();
+        $keyword    = $request->get("q");
+        $type       = $request->get("type");
+        $categories = $request->get("category");
+        $events     = Event::query();
 
         if($keyword) {
-            $events->where("event_type", "LIKE", "%$keyword%")
-                ->orWhereHas("eventLabelLists", function($q) use ($keyword) {
-                    $q->where("name", "LIKE", "%$keyword%");
-                })
-                ->orWhereHas("company", function($q) use($keyword) {
+            $events->orWhereHas("company", function($q) use($keyword) {
                     $q->where("name", "LIKE", "%$keyword%");
                 })
                 ->orWhereHas("eventDetail", function($q) use($keyword) {
                     $q->where("title", "LIKE", "%$keyword%");
                 });
 
-            ActivityService::activity(null, $keyword);
+            // ActivityService::activity(null, $keyword);
+        }
+
+        if($categories) {
+            $events->orWhereHas("eventLabelLists", function($q) use ($categories) {
+                $q->whereIn("name", $categories);
+            });
+        }
+
+        if($type) {
+            if($type != "all") {
+                if($type == "online") {
+                    $events = $events->where("event_type", "online");
+                } else {
+                    $events = $events->where("event_type", "offline");
+                }
+            }
         }
 
         $events = $events->whereNotNull("publish_at")->paginate(6);
-        return view('frontend.pages.events' , compact('events'));
+        $categories = EventLabel::get();
+
+        return view('frontend.pages.event-v2' , compact('events', 'categories'));
     }
 
     public function seeMoreAjaxEventList(Request $request) {

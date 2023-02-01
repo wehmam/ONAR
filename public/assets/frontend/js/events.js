@@ -24,7 +24,7 @@ function seeMore() {
         }
         $.each(data.data, function(key, item) {
             $('#events-data').append(`
-                <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                <div class="col-xl-6 col-md-6" data-aos="zoom-in" data-aos-delay="200">
                     <div class="service-item">
                     <div class="img">
                         <img src="/storage/${item.event_detail.banner.replace("public", "")}" class="img-fluid" style=" width:  100%;height: 350px;object-fit: cover;" alt="">
