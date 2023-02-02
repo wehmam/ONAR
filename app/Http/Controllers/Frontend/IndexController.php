@@ -32,6 +32,8 @@ class IndexController extends Controller
         $keyword    = $request->get("q");
         $type       = $request->get("type");
         $categories = $request->get("category");
+        $price      = $request->get("p");
+
         $events     = Event::query();
 
         if($keyword) {
@@ -42,7 +44,7 @@ class IndexController extends Controller
                     $q->where("title", "LIKE", "%$keyword%");
                 });
 
-            // ActivityService::activity(null, $keyword);
+            ActivityService::activity(null, $keyword);
         }
 
         if($categories) {
@@ -57,6 +59,20 @@ class IndexController extends Controller
                     $events = $events->where("event_type", "online");
                 } else {
                     $events = $events->where("event_type", "offline");
+                }
+            }
+        }
+
+        if($price) {
+            if($price != "all") {
+                if($price == "free") {
+                    $events = $events->whereHas("eventDetail", function($q) {
+                        $q->where("price", "=" , "0");
+                    });
+                } else {
+                    $events = $events->whereHas("eventDetail", function($q) {
+                        $q->where("price", ">" , "0");
+                    });
                 }
             }
         }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\ExportParticipants;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AuthLoginController;
 use App\Http\Controllers\Backend\CategoryController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Frontend\IndexController;
 use App\Models\AdminUser;
 use App\Models\Event;
 use App\Models\Registration;
+use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------

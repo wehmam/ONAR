@@ -24,7 +24,8 @@
                             <th>City</th>
                             <th>Status</th>
                             <th>Price</th>
-                            <th>{{ !is_null(\Sentinel::check()->company_id) ? "Status" : "Action" }}</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                 </table>

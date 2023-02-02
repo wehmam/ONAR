@@ -89,9 +89,9 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Event $event)
     {
-        //
+        return view("backend.pages.schedules.detail", compact("event"));
     }
 
     /**
@@ -203,7 +203,8 @@ class EventController extends Controller
                 $q->eventDetail->event_location ?? "",
                 $q["event_type"] == "online" ? "Online" : "Offline",
                 'Rp. '.number_format($q->eventDetail->price,0,'.','.') ?? "Free",
-                is_null(\Sentinel::check()->company_id) && is_null($q["publish_at"]) ? '<a href="'.url('/backend/events/' . $q['id'] . '/publish').'" class="btn btn-sm btn-info"><i class="fa fa-edit"></i> Publish Events</a>' : (!is_null($q->publish_at) ? '<span class="badge badge-pill badge-info">Publish</span>' : '<span class="badge badge-pill badge-info">Pending</span>')
+                is_null(\Sentinel::check()->company_id) && is_null($q["publish_at"]) ? '<a href="'.url('/backend/events/' . $q['id'] . '/publish').'" class="btn btn-sm btn-info"><i class="fa fa-edit"></i> Publish Events</a>' : (!is_null($q->publish_at) ? '<span class="badge badge-pill badge-info">Publish</span>' : '<span class="badge badge-pill badge-info">Pending</span>'),
+                '<a href="'.url("backend/events/" . $q["id"]).'" class="btn btn-sm btn-warning"><i class="fa fa-eye"></i> Detail</a>'
             ]);
         });
         return response()->json([

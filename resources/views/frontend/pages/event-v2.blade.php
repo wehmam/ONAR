@@ -167,12 +167,37 @@
             <div class="col-md-3">
                 <div class="col-md-12">
                     <div class="checklist categories">
+                        <h4 class="mb-4">Biaya</h4>
+                        <ul>
+                            <li><a type="submit"
+                                    href="{{ request()->url() . (empty($queryParams) ? "?p=all" : "?" . http_build_query(array_merge($queryParams, ['p' => 'all'])) ) }}">
+                                    <h5><i
+                                            class="{{ in_array(request()->get("p"), ["all", ""]) ? "fa fa-check" : "" }} fa-xs"></i>
+                                        All</h5>
+                                </a></li>
+                            <li><a type="submit"
+                                    href="{{ request()->url() . (empty($queryParams) ? "?p=free" :  "?" . http_build_query(array_merge($queryParams, ['p' => 'free'])) ) }}">
+                                    <h5><i
+                                            class="{{ request()->get("p") == "free" ? "fa fa-check" : "" }} fa-xs"></i>
+                                        Gratis</h5>
+                                </a></li>
+                            <li><a type="submit"
+                                    href="{{ request()->url() . (empty($queryParams) ? "?p=non" :  "?" . http_build_query(array_merge($queryParams, ['p' => 'non'])) ) }}">
+                                    <h5><i
+                                            class="{{ request()->get("p") == "non" ? "fa fa-check" : "" }} fa-xs"></i>
+                                        Berbayar</h5>
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="checklist categories">
                         <h4 class="mb-4">Tipe</h4>
                         <ul>
                             <li><a type="submit"
                                     href="{{ request()->url() . (empty($queryParams) ? "?type=all" : "?" . http_build_query(array_merge($queryParams, ['type' => 'all'])) ) }}">
                                     <h5><i
-                                            class="{{ request()->get("type") == "all" ? "fa fa-check" : "" }} fa-xs"></i>
+                                            class="{{ in_array(request()->get("type"), ["all", ""]) ? "fa fa-check" : "" }} fa-xs"></i>
                                         All</h5>
                                 </a></li>
                             <li><a type="submit"

@@ -21,4 +21,8 @@ class Event extends Model
     public function eventLabelLists() {
         return $this->hasMany(EventLabelList::class, "event_id");
     }
+
+    public function participants() {
+        return $this->hasMany(Registration::class);
+    }
 }
