@@ -126,7 +126,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                <button class="btn btn-md btn-success"><i class="fa fa-file" aria-hidden="true"></i> Export Participants</button>
+                                <a href="{{ url("backend/events/export/" . $event->id) }}" class="btn btn-md btn-success"><i class="fa fa-file" aria-hidden="true"></i> Export Participants</a>
                             </div>
                             <div class="col-md-12 mt-5">
                                 <table class="table table-bordered table-registration">

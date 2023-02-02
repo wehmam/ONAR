@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Exports\ExportParticipants;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Event;
 use App\Models\EventLabel;
+use App\Models\Registration;
 use App\Repository\EventRepository;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EventController extends Controller
 {
@@ -221,6 +224,17 @@ class EventController extends Controller
         $event->save();
 
         alertNotify(true, "Sukses publish event " . $event->eventDetail->title);
+        return redirect()->back();
+    }
+
+    public function exportParticipantsEvent($id) {
+        $registrations = Registration::where("event_id", $id)
+            ->get();
+
+        if($registrations->isNotEmpty()) {
+            return Excel::download(new ExportParticipants($registrations), "Laporan Peserta Event " . $registrations->first()->event->eventDetail->title . ".xlsx");
+        }
+
         return redirect()->back();
     }
 }

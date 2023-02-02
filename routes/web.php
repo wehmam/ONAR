@@ -75,6 +75,7 @@ Route::prefix('backend')->group(function () {
             // Route::get('/schedules/ajax', [ScheduleController::class, "schedulesAjaxData"]);
             Route::get('events/ajax', [EventController::class, "eventsAjaxData"]);
             Route::get('events/{id}/publish', [EventController::class, "eventsPublish"]);
+            Route::get('events/export/{id}', [EventController::class, "exportParticipantsEvent"]);
             Route::resource('/schedules', ScheduleController::class);
             Route::resource('events', EventController::class)->middleware("checkActivatedAdmin");
 
